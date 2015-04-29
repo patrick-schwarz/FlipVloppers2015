@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import at.tugraz.flipvloppers.flipvloppers2015.R;
@@ -18,6 +20,7 @@ public class FeedListAdapter extends BaseAdapter{
     private Activity activity;
     private LayoutInflater inflater;
     private List<Message> messages;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
     public FeedListAdapter(Activity activity, List<Message> messages) {
         this.activity = activity;
@@ -55,7 +58,8 @@ public class FeedListAdapter extends BaseAdapter{
 
         //TODO get sender name
         name.setText(message.getId_user_sender() + " username");
-        timestamp.setText(message.getCreate_time().toString());
+        Date date = message.getCreate_time();
+        timestamp.setText(sdf.format(date));
 
         if (message.getMessage_type_id() == 1) //TODO Newsfeed message type check
         {
