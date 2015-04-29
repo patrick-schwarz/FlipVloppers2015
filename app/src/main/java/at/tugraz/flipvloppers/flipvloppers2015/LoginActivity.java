@@ -109,7 +109,16 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 error_msg.setVisibility(View.VISIBLE);
                 return;
             }
-            
+              Intent nextScreen = new Intent(getApplicationContext(), NewsfeedActivity.class);
+
+            //Sending data to another Activity
+                /*
+                nextScreen.putExtra("name", inputName.getText().toString());
+                nextScreen.putExtra("email", inputEmail.getText().toString());
+
+                Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
+
+            startActivity(nextScreen);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
