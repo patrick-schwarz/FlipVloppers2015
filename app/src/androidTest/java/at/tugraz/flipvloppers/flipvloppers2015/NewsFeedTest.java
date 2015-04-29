@@ -1,11 +1,7 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
-import at.tugraz.flipvloppers.flipvloppers2015.utils.Utils;
-
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.AbsListView;
-import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.robotium.solo.Solo;
@@ -23,12 +19,12 @@ public class NewsFeedTest extends ActivityInstrumentationTestCase2<NewsfeedActiv
     public void setUp() throws Exception {
         super.setUp();
         mySolo = new Solo(getInstrumentation(), getActivity());
-        Utils.Login(mySolo);
+        //Utils.Login(mySolo);
     }
 
     public void tearDown() throws Exception {
         mySolo.finishOpenedActivities();
-        Utils.Logout(mySolo);
+        //Utils.Logout(mySolo);
     }
 
     public void testPressAllButtons()
@@ -39,22 +35,31 @@ public class NewsFeedTest extends ActivityInstrumentationTestCase2<NewsfeedActiv
 
     public void testScrollUpAndDown()
     {
-        ScrollView scrollView =(ScrollView) mySolo.getView(R.id.editTextUsername);
+        AbsListView scrollView =(AbsListView) mySolo.getView(R.id.listPosts);
 
         assertNotNull(scrollView);
 
-        mySolo.scrollToTop();
+        mySolo.scrollListToTop(scrollView);
 
-        TextView top = mySolo.getText(scrollView.getTop());
+        TextView top = (TextView)scrollView.getChildAt(0).findViewById(R.id.feed_message);
+        top.setText("First");
         TextView topText = mySolo.getText(top.getText().toString(), true);
 
         assertNotNull(topText);
 
-        mySolo.scrollToBottom();
+        mySolo.scrollListToBottom(scrollView);
 
-        TextView bottom = mySolo.getText(scrollView.getBottom());
+        TextView bottom = (TextView)scrollView.getChildAt(scrollView.getChildCount()-1).findViewById(R.id.feed_message);
+        bottom.setText("last");
         TextView bottomText = mySolo.getText(bottom.getText().toString(), true);
 
         assertNotNull(bottomText);
+
+        mySolo.scrollListToTop(scrollView);
+
+        bottom.setText("last");
+        bottomText = mySolo.getText(bottom.getText().toString(), true);
+
+        assertNull(bottomText);
     }
 }

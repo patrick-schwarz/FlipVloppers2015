@@ -35,7 +35,7 @@ public class NewsfeedActivity extends Activity{
 
         newsfeedController = ControllerFactory.GetNewsFeedControllerInstance();
 
-        listView = (ListView) findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.listPosts);
         message = (EditText) findViewById(R.id.editTextMessage);
         btnSend = (Button) findViewById(R.id.buttonSend);
 

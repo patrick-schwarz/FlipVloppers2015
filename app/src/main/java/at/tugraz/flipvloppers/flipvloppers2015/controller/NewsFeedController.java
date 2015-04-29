@@ -1,7 +1,6 @@
 package at.tugraz.flipvloppers.flipvloppers2015.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.Message;
@@ -14,6 +13,9 @@ public class NewsFeedController {
   public List<Message> getList(int offset,int size)
   {
       List<Message> messages = new ArrayList<Message>();
+      messages.add(new Message());
+      messages.add(new Message());
+      messages.add(new Message());
       messages.add(new Message());
       messages.add(new Message());
       messages.add(new Message());
