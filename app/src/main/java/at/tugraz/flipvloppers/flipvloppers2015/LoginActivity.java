@@ -3,22 +3,20 @@ package at.tugraz.flipvloppers.flipvloppers2015;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.util.Log;
-
 
 import com.google.gson.Gson;
 
 import java.util.concurrent.ExecutionException;
 
-import at.tugraz.flipvloppers.flipvloppers2015.model.items.*;
-
 import at.tugraz.flipvloppers.flipvloppers2015.controller.LoginController;
+import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 
 public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
@@ -82,12 +80,10 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 password.setText("");
                 error_msg.setVisibility(View.INVISIBLE);
                 break;
+
             case R.id.buttonLogin:
                 login();
                 break;
-
-
-              //  Intent nextScreen = new Intent(getApplicationContext(), NewsfeedActivity.class);
 
                 //Sending data to another Activity
                 /*

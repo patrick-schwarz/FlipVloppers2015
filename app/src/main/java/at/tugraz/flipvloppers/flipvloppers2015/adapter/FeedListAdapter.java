@@ -8,16 +8,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import at.tugraz.flipvloppers.flipvloppers2015.R;
-import at.tugraz.flipvloppers.flipvloppers2015.model.items.Message;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 
 public class FeedListAdapter extends BaseAdapter{
 
     private Activity activity;
     private LayoutInflater inflater;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     private List<NewsFeed> messages;
 
     public FeedListAdapter(Activity activity, List<NewsFeed> messages) {
@@ -56,10 +58,10 @@ public class FeedListAdapter extends BaseAdapter{
 
         //TODO get sender name
         name.setText(message.getLast() + " " + message.getFirst());
-        timestamp.setText(message.getDate().toString());
         feedMsg.setText(message.getMessage());
         feedMsg.setVisibility(View.VISIBLE);
-
+        Date date = message.getDate();
+        timestamp.setText(sdf.format(date));
 
         return view;
     }

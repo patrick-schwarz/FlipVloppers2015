@@ -19,14 +19,10 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-import at.tugraz.flipvloppers.flipvloppers2015.model.items.LoginResponseUser;
-import at.tugraz.flipvloppers.flipvloppers2015.model.items.Message;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
