@@ -21,13 +21,14 @@ if(!empty($user) && !empty($password))
     {
 	  $output_array = array();
 	  for ($i = 0; $i < $number; $i++) 
-      {
+      {        
+        $id = mysql_result($result, $i, "idmessage");
         $user = mysql_result($result, $i, "username");
 		$first = mysql_result($result, $i, "first_name");
 		$last = mysql_result($result, $i, "last_name");
 		$date = mysql_result($result, $i, "create_time");
 		$text = mysql_result($result, $i, "text");
-        $data = array( 'user' => $user, 'first' => $first, 'last' => $last, 'date' => $date, 'message' => $text );
+        $data = array( 'id' => $id, 'user' => $user, 'first' => $first, 'last' => $last, 'date' => $date, 'message' => $text );
         array_push($output_array, $data);
       }
 	  echo json_encode( $output_array );

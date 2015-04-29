@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.util.Log;
 
 
+import com.google.gson.Gson;
+
 import java.util.concurrent.ExecutionException;
 
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.*;
@@ -109,7 +111,8 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 error_msg.setVisibility(View.VISIBLE);
                 return;
             }
-              Intent nextScreen = new Intent(getApplicationContext(), NewsfeedActivity.class);
+            Intent nextScreen = new Intent(getApplicationContext(), NewsfeedActivity.class);
+            nextScreen.putExtra("user", new Gson().toJson(user));
 
             //Sending data to another Activity
                 /*
