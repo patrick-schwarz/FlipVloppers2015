@@ -2,9 +2,14 @@ package at.tugraz.flipvloppers.flipvloppers2015;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.AbsListView;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.robotium.solo.Solo;
+
+import at.tugraz.flipvloppers.flipvloppers2015.model.items.Message;
+
 /**
  * Created by Admin on 29.04.2015.
  */
@@ -35,30 +40,28 @@ public class NewsFeedTest extends ActivityInstrumentationTestCase2<NewsfeedActiv
 
     public void testScrollUpAndDown()
     {
-        AbsListView scrollView =(AbsListView) mySolo.getView(R.id.listPosts);
+        ListView listView =(ListView) mySolo.getView(R.id.listPosts);
 
-        assertNotNull(scrollView);
+        assertNotNull(listView);
 
-        mySolo.scrollListToTop(scrollView);
+        mySolo.scrollListToTop(listView);
 
-        TextView top = (TextView)scrollView.getChildAt(0).findViewById(R.id.feed_message);
-        top.setText("First");
-        TextView topText = mySolo.getText(top.getText().toString(), true);
+        Message messagefirst = (Message)listView.getItemAtPosition(0);
+        TextView topText = mySolo.getText(messagefirst.getText(), true);
 
         assertNotNull(topText);
 
-        mySolo.scrollListToBottom(scrollView);
+        mySolo.scrollListToBottom(listView);
 
-        TextView bottom = (TextView)scrollView.getChildAt(scrollView.getChildCount()-1).findViewById(R.id.feed_message);
-        bottom.setText("last");
-        TextView bottomText = mySolo.getText(bottom.getText().toString(), true);
+
+        Message messagelast = (Message)listView.getItemAtPosition(0);
+        TextView bottomText = mySolo.getText(messagelast.getText(), true);
 
         assertNotNull(bottomText);
 
-        mySolo.scrollListToTop(scrollView);
+        mySolo.scrollListToTop(listView);
 
-        bottom.setText("last");
-        bottomText = mySolo.getText(bottom.getText().toString(), true);
+        bottomText = mySolo.getText(messagelast.getText().toString(), true);
 
         assertNull(bottomText);
     }
