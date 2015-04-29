@@ -46,5 +46,4 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
         mySolo.clickOnCheckBox(0);
         assertTrue("Error. Testbox should be checked", mySolo.isCheckBoxChecked(0));
     }
-
 }

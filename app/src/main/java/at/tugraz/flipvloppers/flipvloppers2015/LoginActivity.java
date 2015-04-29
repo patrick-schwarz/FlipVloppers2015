@@ -7,16 +7,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
+import at.tugraz.flipvloppers.flipvloppers2015.controller.LoginController;
+
 
 public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
 
     private EditText username;
     private EditText password;
+    private LoginController ctrlLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ctrlLogin = ControllerFactory.GetLoginControllerInstance();
 
         username = (EditText) findViewById(R.id.editTextUsername);
         password = (EditText) findViewById(R.id.editTextPassword);
@@ -58,6 +64,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 break;
             case R.id.editTextPassword:
                 password.setText("");
+                break;
+            case R.id.buttonLogin:
+                if(ctrlLogin.CheckLogin(username.getText().toString(),password.getText().toString())) {
+                    //TODO Link to next page
+                }
                 break;
         }
     }
