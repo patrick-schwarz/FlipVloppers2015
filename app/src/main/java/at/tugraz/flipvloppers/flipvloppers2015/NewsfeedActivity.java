@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -30,8 +31,10 @@ public class NewsfeedActivity extends Activity{
     private List<NewsFeed> messageList;
     private User user;
 
+    private LinearLayout messageSection;
     private EditText message;
     private Button btnSend;
+    private Button btnOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +44,13 @@ public class NewsfeedActivity extends Activity{
         listView = (ListView) findViewById(R.id.listPosts);
         btnSend = (Button) findViewById(R.id.buttonSend);
         message = (EditText) findViewById(R.id.editTextMessage);
+        btnOpen = (Button) findViewById(R.id.buttonOpen);
+        messageSection = (LinearLayout) findViewById(R.id.llMessageSection);
+        messageSection.setVisibility(View.GONE);
 
         messageList = getNewsfeed();
         btnClick();
+        btnOpen();
 
         listAdapter = new FeedListAdapter(this, messageList);
         listView.setAdapter(listAdapter);
@@ -69,6 +76,23 @@ public class NewsfeedActivity extends Activity{
                 listAdapter.notifyDataSetChanged();
                 finish();
                 startActivity(getIntent());
+            }
+        });
+    }
+
+    public void btnOpen()
+    {
+        btnOpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (btnOpen.getText().equals("+"))
+                {
+                    messageSection.setVisibility(View.VISIBLE);
+                    btnOpen.setText("-");
+                } else {
+                    messageSection.setVisibility(View.GONE);
+                    btnOpen.setText("+");
+                }
             }
         });
     }
