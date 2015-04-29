@@ -45,7 +45,8 @@
         android:id="@+id/buttonLogin"
         android:layout_below="@+id/checkBoxStayLoggedIn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp" />
+        android:layout_marginTop="29dp"
+        android:onClick="onClick" />
 
     <TextView
         android:layout_width="wrap_content"

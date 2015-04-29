@@ -8,12 +8,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.util.Log;
+
+
+import java.util.concurrent.ExecutionException;
+
+import at.tugraz.flipvloppers.flipvloppers2015.model.items.*;
+
+import at.tugraz.flipvloppers.flipvloppers2015.controller.LoginController;
 
 
 public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
 
     private EditText username;
     private EditText password;
+    private TextView error_msg;
     private Button btnlogin;
 
     @Override
@@ -25,6 +35,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         password = (EditText) findViewById(R.id.editTextPassword);
         btnlogin = (Button) findViewById(R.id.buttonLogin);
 
+        error_msg = (TextView) findViewById(R.id.textViewError);
 
         username.setOnClickListener(this);
         password.setOnClickListener(this);
@@ -63,13 +74,18 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         {
             case R.id.editTextUsername:
                 username.setText("");
+                error_msg.setVisibility(View.INVISIBLE);
                 break;
             case R.id.editTextPassword:
                 password.setText("");
+                error_msg.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.buttonLogin:
+                login();
                 break;
 
-            case R.id.buttonLogin:
-                Intent nextScreen = new Intent(getApplicationContext(), NewsfeedActivity.class);
+
+              //  Intent nextScreen = new Intent(getApplicationContext(), NewsfeedActivity.class);
 
                 //Sending data to another Activity
                 /*
@@ -78,8 +94,27 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                 Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
 
-                startActivity(nextScreen);
-                break;
+                //startActivity(nextScreen);
+              //  break;
+        }
+    }
+
+    private void login()
+    {
+        try {
+            Log.v("USER", "calling execute with: " + username.getText().toString() + " " + password.getText().toString());
+            User user = new LoginController().execute(username.getText().toString(), password.getText().toString()).get();
+            if (user == null)
+            {
+                error_msg.setVisibility(View.VISIBLE);
+                return;
+            }
+            
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
     }
 }
