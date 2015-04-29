@@ -7,12 +7,21 @@ public class User {
     int id_;
     String username_;
     String first_name_;
+    String last_name_;
     String password_;
-    String salt_;
 
     public User()
     {
 
+    }
+
+    public User(LoginResponseUser response, String username, String password)
+    {
+        id_ = response.id;
+        username_ = username;
+        password_ = password;
+        first_name_ = response.first_name;
+        last_name_ = response.last_name;
     }
 
     public int getId_() {
@@ -31,12 +40,20 @@ public class User {
         this.username_ = username_;
     }
 
-    public String getFirst_name_() {
+    public String getFirstName() {
         return first_name_;
     }
 
-    public void setFirst_name_(String first_name_) {
+    public void setFirstName(String first_name_) {
         this.first_name_ = first_name_;
+    }
+
+    public String getLastName() {
+        return last_name_;
+    }
+
+    public void setLastName(String last_name_) {
+        this.last_name_ = last_name_;
     }
 
     public String getPassword_() {
@@ -47,11 +64,4 @@ public class User {
         this.password_ = password_;
     }
 
-    public String getSalt_() {
-        return salt_;
-    }
-
-    public void setSalt_(String salt_) {
-        this.salt_ = salt_;
-    }
 }

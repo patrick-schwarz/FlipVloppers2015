@@ -46,6 +46,7 @@
         android:layout_below="@+id/checkBoxStayLoggedIn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="29dp"
+        android:onClick="onClick"
         android:backgroundTint="#69d0f6" />
 
     <TextView
@@ -59,15 +60,5 @@
         android:layout_alignLeft="@+id/checkBoxStayLoggedIn"
         android:layout_alignStart="@+id/checkBoxStayLoggedIn"
         android:layout_marginLeft="15px" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageViewLogo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp"
-        android:focusableInTouchMode="false"
-        android:src="@mipmap/ic_logo" />
 
 </RelativeLayout>

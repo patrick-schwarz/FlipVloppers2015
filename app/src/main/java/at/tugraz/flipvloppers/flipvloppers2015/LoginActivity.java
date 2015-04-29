@@ -3,6 +3,7 @@ package at.tugraz.flipvloppers.flipvloppers2015;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,34 +11,37 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
+import com.google.gson.Gson;
+
+import java.util.concurrent.ExecutionException;
+
 import at.tugraz.flipvloppers.flipvloppers2015.controller.LoginController;
+import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 
 public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
 
     private EditText username;
     private EditText password;
-    private LoginController ctrlLogin;
+    private TextView error_msg;
     private Button btnlogin;
-    private TextView tverror;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ctrlLogin = ControllerFactory.GetLoginControllerInstance();
-
         username = (EditText) findViewById(R.id.editTextUsername);
         password = (EditText) findViewById(R.id.editTextPassword);
         btnlogin = (Button) findViewById(R.id.buttonLogin);
-        tverror = (TextView) findViewById(R.id.textViewError);
 
+        error_msg = (TextView) findViewById(R.id.textViewError);
 
         username.setOnClickListener(this);
         password.setOnClickListener(this);
         btnlogin.setOnClickListener(this);
+
+
     }
 
 
@@ -70,29 +74,55 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         {
             case R.id.editTextUsername:
                 username.setText("");
+                error_msg.setVisibility(View.INVISIBLE);
                 break;
             case R.id.editTextPassword:
                 password.setText("");
+                error_msg.setVisibility(View.INVISIBLE);
                 break;
-            case R.id.buttonLogin:
-                if(ctrlLogin.CheckLogin(username.getText().toString(),password.getText().toString())) {
-                    Intent nextScreen = new Intent(getApplicationContext(), NewsfeedActivity.class);
 
-                    //Sending data to another Activity
+            case R.id.buttonLogin:
+                login();
+                break;
+
+                //Sending data to another Activity
                 /*
                 nextScreen.putExtra("name", inputName.getText().toString());
                 nextScreen.putExtra("email", inputEmail.getText().toString());
 
                 Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
 
-                    startActivity(nextScreen);
-                }
-                else
-                {
-                    tverror.setVisibility(View.VISIBLE);
-                    tverror.setText("Error Login or Password is wrong!");
-                }
-                break;
+                //startActivity(nextScreen);
+              //  break;
+        }
+    }
+
+    private void login()
+    {
+        try {
+            Log.v("USER", "calling execute with: " + username.getText().toString() + " " + password.getText().toString());
+            User user = new LoginController().execute(username.getText().toString(), password.getText().toString()).get();
+            if (user == null)
+            {
+                error_msg.setVisibility(View.VISIBLE);
+                return;
+            }
+            Intent nextScreen = new Intent(getApplicationContext(), NewsfeedActivity.class);
+            nextScreen.putExtra("user", new Gson().toJson(user));
+
+            //Sending data to another Activity
+                /*
+                nextScreen.putExtra("name", inputName.getText().toString());
+                nextScreen.putExtra("email", inputEmail.getText().toString());
+
+                Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
+
+            startActivity(nextScreen);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
     }
 }
