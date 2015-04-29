@@ -13,11 +13,11 @@ import com.robotium.solo.Solo;
  * Created by Admin on 29.04.2015.
  */
 
-public class NewsFeedTest extends ActivityInstrumentationTestCase2<NewsFeedActivity> {
+public class NewsFeedTest extends ActivityInstrumentationTestCase2<NewsfeedActivity> {
     private Solo mySolo;
 
     public NewsFeedTest() {
-        super(NewsFeedActivity.class);
+        super(NewsfeedActivity.class);
     }
 
     public void setUp() throws Exception {
