@@ -77,4 +77,5 @@ public class NewsFeedController extends AsyncTask<User, Void, ArrayList<NewsFeed
         }
         return new ArrayList<NewsFeed>();
     }
+
 }

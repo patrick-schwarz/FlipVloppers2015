@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.FeedListAdapter;
+import at.tugraz.flipvloppers.flipvloppers2015.controller.NewsFeedAddController;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.NewsFeedController;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
@@ -49,9 +50,9 @@ public class NewsfeedActivity extends Activity{
 
         //Generate test data
 
-        NewsFeed new_msg = new NewsFeed(0, "1", "username", "Mr", new Date(1000), "erster test");
+        //NewsFeed new_msg = new NewsFeed(0, "1", "username", "Mr", new Date(1000), "erster test");
 
-        messageList.add(new_msg);
+        //messageList.add(new_msg);
 
         listAdapter.notifyDataSetChanged();
     }
@@ -60,11 +61,14 @@ public class NewsfeedActivity extends Activity{
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                NewsFeed message1 = new NewsFeed(1, "Tamara", "Feiertag", "Tami", new Date(),
+                NewsFeed message1 = new NewsFeed(1, user.getUsername_(), user.getLastName(), user.getFirstName(), new Date(),
                         message.getText().toString());
-                messageList.add(message1);
+                //messageList.add(message1);
                 newFeedPost(message1);
+
                 listAdapter.notifyDataSetChanged();
+                finish();
+                startActivity(getIntent());
             }
         });
     }
@@ -96,7 +100,15 @@ public class NewsfeedActivity extends Activity{
 
     public void newFeedPost(NewsFeed new_feed)
     {
-        //TODO: send to database
+        Log.v("newFeedPost", "sending data to database newFeedPost");
+        try {
+            new NewsFeedAddController().execute(user.getUsername_(), user.getPassword_(), new_feed.getMessage());
+            messageList = new NewsFeedController().execute(user).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
 }

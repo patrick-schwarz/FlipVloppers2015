@@ -12,7 +12,7 @@ if(!empty($user) && !empty($password))
 
   if ($user_id != -1)
   {
-    $query = "SELECT * FROM message m INNER JOIN user u ON (m.id_user_sender = u.iduser) WHERE message_type_id='NEWSF' ORDER BY create_time";
+    $query = "SELECT * FROM message m INNER JOIN user u ON (m.id_user_sender = u.iduser) WHERE message_type_id='NEWSF' ORDER BY create_time DESC";
   
     $result = MYSQL_QUERY($query);
 	$number = MYSQL_NUMROWS($result);
@@ -34,7 +34,6 @@ if(!empty($user) && !empty($password))
 	  echo json_encode( $output_array );
 
     }
-   
   }
   
 }
