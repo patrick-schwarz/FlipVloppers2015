@@ -26,7 +26,7 @@ public class NewsfeedActivity extends Activity {
     private ListView listView;
     private FeedListAdapter listAdapter;
     private List<NewsFeed> messageList;
-    private User user;
+    public User user;
 
     private LinearLayout messageSection;
     private EditText message;
