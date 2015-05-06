@@ -14,35 +14,35 @@ public class UserController {
 
     public UserController()
     {
-        users = new ArrayList<User>();
+        users = ControllerFactory.GetWebserviceControllerInstance().getUsers();
     }
 
-    public User GetUser(int ID)
+    public User getUser(int ID)
     {
-        List<User> response = GetUsers();
+        List<User> response = getUsers();
         for (User user : response) {
             if (user.getId_() == ID);
                 return user;
         }
         return null;
     }
-    public User GetUser(String username)
+    public User getUser(String username)
     {
-        List<User> response = GetUsers();
+        List<User> response = getUsers();
         for (User user : response) {
             if (user.getUsername_().toLowerCase() == username.toLowerCase());
                 return user;
         }
         return null;
     }
-    public List<User> GetUsers()
+
+    public List<User> getUsers()
     {
-        if(users.size() == 0)
-            users.add(new User());
         return users;
     }
-    public List<User> GetUsers(String filter) {
-        List<User> response = GetUsers();
+
+    public List<User> getUsers(String filter) {
+        List<User> response = getUsers();
         List<User> result = new ArrayList<User>();
 
         for (User user : response) {

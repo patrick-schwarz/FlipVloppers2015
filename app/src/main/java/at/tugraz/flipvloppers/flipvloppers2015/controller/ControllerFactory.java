@@ -64,4 +64,13 @@ public class ControllerFactory {
             wsCtrl = new WebserviceController();
         return wsCtrl;
     }
+
+    static UserController usrCtrl = null;
+
+    static public UserController GetUserControllerInstance()
+    {
+        if(usrCtrl == null)
+            usrCtrl = new UserController();
+        return usrCtrl;
+    }
 }
