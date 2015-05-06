@@ -30,8 +30,8 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
  * Created by Admin on 22.04.2015.
  */
 public class NewsFeedController {
-    public void SendNewsfeedPost(String username, String password,String message) {
-        ControllerFactory.GetWebserviceControllerInstance().SendNewsfeedPost(username,password,message);
+    public void SendNewsfeedPost(String message) {
+        ControllerFactory.GetWebserviceControllerInstance().SendNewsfeedPost(message);
     }
 
     public List<NewsFeed> GetNewsFeedList()

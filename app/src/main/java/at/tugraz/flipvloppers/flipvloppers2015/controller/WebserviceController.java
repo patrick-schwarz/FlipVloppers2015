@@ -107,7 +107,7 @@ public class WebserviceController {
     }
 
 
-    public void SendNewsfeedPost(String username, String password,String message)
+    public void SendNewsfeedPost(String message)
     {
         AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
 
@@ -115,8 +115,6 @@ public class WebserviceController {
             public static final String SERVER_URL = "http://134.0.27.180/NewsfeedAdder.php";
             @Override
             protected Void doInBackground(String... params) {
-
-
                 try {
                     //Create an HTTP client
                     HttpClient client = new DefaultHttpClient();
@@ -142,7 +140,8 @@ public class WebserviceController {
                 return null;
             }
         };
-        task.execute(username, password);
+        User user = ControllerFactory.getCurrentUser();
+        task.execute(user.getUsername_(), user.getPassword_(),message);
     }
 
     public List<NewsFeed> GetNewsFeedList() {

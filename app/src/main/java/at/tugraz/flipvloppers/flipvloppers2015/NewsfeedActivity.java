@@ -112,7 +112,7 @@ public class NewsfeedActivity extends Activity {
 
     public void newFeedPost(NewsFeed new_feed) {
         Log.v("newFeedPost", "sending data to database newFeedPost");
-        nfCtrl.SendNewsfeedPost(user.getUsername_(), user.getPassword_(), new_feed.getMessage());
+        nfCtrl.SendNewsfeedPost( new_feed.getMessage());
         messageList = nfCtrl.GetNewsFeedList();
     }
 
