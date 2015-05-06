@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+android:orientation="vertical" android:layout_width="fill_parent"
+android:layout_height="fill_parent">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
-        android:background="@color/title_border"
-        android:weightSum="1">
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/title_height"
+    android:background="@color/title_border"
+    android:weightSum="1">
 
-        <Space
-            android:layout_width="50dp"
-            android:layout_height="match_parent" />
+    <Space
+        android:layout_width="50dp"
+        android:layout_height="match_parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Newsfeed"
-            android:id="@+id/textViewTitle"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_weight="0.95" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Newsfeed"
+        android:id="@+id/textViewTitle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_weight="0.95" />
 
-        <Button
-            android:layout_width="33dp"
-            android:layout_height="35dp"
-            android:text="+"
-            android:id="@+id/buttonOpen"
-            android:gravity="center"/>
+    <Button
+        android:layout_width="33dp"
+        android:layout_height="35dp"
+        android:text="+"
+        android:id="@+id/buttonOpen"
+        android:gravity="center"/>
 
-    </LinearLayout>
+</LinearLayout>
 
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:weightSum="1"
-        android:id="@+id/llMessageSection">
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="66dp"
+    android:weightSum="1"
+    android:id="@+id/llMessageSection">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editTextMessage"
-            android:autoText="false"
-            android:layout_weight="0.97" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/editTextMessage"
+        android:autoText="false"
+        android:layout_weight="0.97" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send"
-            android:id="@+id/buttonSend"
-            android:backgroundTint="#69d0f6" />
-    </LinearLayout>
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:id="@+id/buttonSend"
+        android:backgroundTint="#69d0f6" />
+</LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-        <ListView
+    <ListView
         android:id="@+id/listPosts"
         android:layout_width="fill_parent"
         android:layout_height="467dp"
         android:divider="@null" />
-    </LinearLayout>
+</LinearLayout>
 
 </LinearLayout>

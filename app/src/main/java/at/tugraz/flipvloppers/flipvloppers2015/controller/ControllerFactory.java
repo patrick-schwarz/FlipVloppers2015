@@ -47,6 +47,15 @@ public class ControllerFactory {
         return nfCtrl;
     }
 
+    static UserController uCtrl = null;
+
+    static public UserController GetUserControllerInstance()
+    {
+        if(uCtrl == null)
+            uCtrl = new UserController();
+        return uCtrl;
+    }
+
     static WebserviceController wsCtrl = null;
 
     static public WebserviceController GetWebserviceControllerInstance()

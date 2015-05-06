@@ -32,7 +32,7 @@ public class TabContainerActivity extends TabActivity {
         tabHost.addTab(spec);
 
         drawable = res.getDrawable(R.mipmap.ic_action_user);
-        intent = new Intent().setClass(this, SettingsAcitivity.class);
+        intent = new Intent().setClass(this, ContactsActivity.class);
         spec = tabHost.newTabSpec("Contacts").setIndicator("Contacts",drawable)
                 .setContent(intent);
         tabHost.addTab(spec);
