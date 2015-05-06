@@ -27,15 +27,28 @@ public class TabContainerActivity extends TabActivity {
         intent = new Intent().setClass(this, NewsfeedActivity.class);
         String userstring = getIntent().getExtras().getString("user");
         intent.putExtra("user", userstring);
-        spec = tabHost.newTabSpec("First").setIndicator("Newsfeed",drawable)
+        spec = tabHost.newTabSpec("Newsfeed").setIndicator("News",drawable)
+                .setContent(intent);
+        tabHost.addTab(spec);
+
+        drawable = res.getDrawable(R.mipmap.ic_action_user);
+        intent = new Intent().setClass(this, SettingsAcitivity.class);
+        spec = tabHost.newTabSpec("Contacts").setIndicator("Contacts",drawable)
+                .setContent(intent);
+        tabHost.addTab(spec);
+
+        drawable = res.getDrawable(R.mipmap.ic_action_mail_add);
+        intent = new Intent().setClass(this, SettingsAcitivity.class);
+        spec = tabHost.newTabSpec("PrivateMessage").setIndicator("Chat",drawable)
                 .setContent(intent);
         tabHost.addTab(spec);
 
         drawable = res.getDrawable(R.mipmap.ic_action_star);
         intent = new Intent().setClass(this, SettingsAcitivity.class);
-        spec = tabHost.newTabSpec("Second").setIndicator("Options",drawable)
+        spec = tabHost.newTabSpec("Settings").setIndicator("Settings",drawable)
                 .setContent(intent);
         tabHost.addTab(spec);
+
     }
 
 
