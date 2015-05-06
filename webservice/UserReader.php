@@ -26,7 +26,9 @@ if(!empty($user) && !empty($password))
         $user = mysql_result($result, $i, "username");
 		$first = mysql_result($result, $i, "first_name");
 		$last = mysql_result($result, $i, "last_name");
-        $data = array( 'id' => $id, 'user' => $user, 'first' => $first, 'last' => $last);
+		$pw = mysql_result($result, $i, "password");
+        $data = array( 'id_' => $id, 'username_' => $user, 'first_name_' => $first,
+                        'last_name_' => $last, 'password_' => $pw);
         array_push($output_array, $data);
       }
 	  echo json_encode( $output_array );
