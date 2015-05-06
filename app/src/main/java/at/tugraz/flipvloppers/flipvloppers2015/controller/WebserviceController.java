@@ -112,7 +112,7 @@ public class WebserviceController {
         AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
 
             private static final String TAG = "NewsFeedReader";
-            public static final String SERVER_URL = "http://134.0.27.180/NewsfeedReader.php";
+            public static final String SERVER_URL = "http://134.0.27.180/NewsfeedAdder.php";
             @Override
             protected Void doInBackground(String... params) {
 
