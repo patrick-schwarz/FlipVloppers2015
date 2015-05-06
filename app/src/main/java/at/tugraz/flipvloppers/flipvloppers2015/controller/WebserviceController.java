@@ -1,6 +1,5 @@
 package at.tugraz.flipvloppers.flipvloppers2015.controller;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -28,13 +27,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import at.tugraz.flipvloppers.flipvloppers2015.configuration.Configuration;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.LoginResponseUser;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 /**
- * Created by Admin on 06.05.2015.
+ * @pschwarz
  */
 public class WebserviceController {
 
@@ -215,5 +213,42 @@ public class WebserviceController {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void DeleteNewsfeedPost(String message)
+    {
+        AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
+
+            private static final String TAG = "NewsFeedReader";
+            public static final String SERVER_URL = "http://134.0.27.180/NewsfeedRemover.php";
+            @Override
+            protected Void doInBackground(String... params) {
+                try {
+                    //Create an HTTP client
+                    HttpClient client = new DefaultHttpClient();
+                    HttpPost post = new HttpPost(SERVER_URL);
+                    Log.e(TAG, "sending data to database");
+
+                    // set POST parameters
+                    ArrayList<BasicNameValuePair> postParameters = new ArrayList<>();
+                    postParameters.add(new BasicNameValuePair("user", params[0]));
+                    postParameters.add(new BasicNameValuePair("password", params[1]));
+                    postParameters.add(new BasicNameValuePair("message", params[2]));
+
+                    post.setEntity(new UrlEncodedFormEntity(postParameters));
+
+                    //Perform the request and check the status code
+                    HttpResponse response = client.execute(post);
+                    Log.e(TAG, "finished deleting");
+
+
+                } catch (Exception ex) {
+                    Log.e(TAG, "Failed to send HTTP POST request due to: " + ex);
+                }
+                return null;
+            }
+        };
+        User user = ControllerFactory.getCurrentUser();
+        task.execute(user.getUsername_(), user.getPassword_(),message);
     }
 }

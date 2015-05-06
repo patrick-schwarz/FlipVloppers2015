@@ -1,19 +1,12 @@
 package at.tugraz.flipvloppers.flipvloppers2015.controller;
 
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
+import android.content.res.Configuration;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-
-import at.tugraz.flipvloppers.flipvloppers2015.configuration.Configuration;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 /**
- * Created by Admin on 22.04.2015.
+ * @pschwarz
  */
 public class ControllerFactory {
 
