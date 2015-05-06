@@ -53,14 +53,41 @@ public class NewsfeedActivity extends Activity {
 
         listAdapter = new FeedListAdapter(this, messageList);
         listView.setAdapter(listAdapter);
+        Thread thread = new Thread(){
+            public void run(){
+                refreshNews();
+            }
+        };
 
-        //Generate test data
-
-        //NewsFeed new_msg = new NewsFeed(0, "1", "username", "Mr", new Date(1000), "erster test");
-
-        //messageList.add(new_msg);
+        thread.start();
 
         listAdapter.notifyDataSetChanged();
+    }
+
+    public void refreshNews()
+    {
+        try {
+            while(true) {
+                Thread.sleep(5000);
+                if (listIsAtTop()) {
+                    List<NewsFeed> new_list= getNewsfeed();
+                    if (messageList.size() == new_list.size())
+                        continue;
+
+                    finish();
+                    Intent intent = getParent().getIntent();
+                    startActivity(intent);
+                    return;
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean listIsAtTop() {
+        if(listView.getChildCount() == 0) return true;
+        return listView.getChildAt(0).getTop() == 0;
     }
 
     public void btnClick() {
@@ -69,7 +96,7 @@ public class NewsfeedActivity extends Activity {
             public void onClick(View arg0) {
                 NewsFeed message1 = new NewsFeed(1, user.getUsername_(), user.getLastName(), user.getFirstName(), new Date(),
                         message.getText().toString());
-                //messageList.add(message1);
+
                 newFeedPost(message1);
 
                 listAdapter.notifyDataSetChanged();
