@@ -44,7 +44,7 @@
         android:id="@+id/buttonLogin"
         android:onClick="onClick"
         android:backgroundTint="#69d0f6"
-        android:layout_below="@+id/checkBoxStayLoggedIn"
+        android:layout_below="@+id/textViewError"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:id="@+id/textViewError"
         android:textColor="#F00"
         android:visibility="invisible"
-        android:layout_below="@+id/buttonLogin"
+        android:layout_below="@+id/checkBoxStayLoggedIn"
         android:layout_centerHorizontal="true" />
 
     <ImageView
