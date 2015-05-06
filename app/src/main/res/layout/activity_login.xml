@@ -14,9 +14,9 @@
         android:text="Username"
         android:ems="10"
         android:id="@+id/editTextUsername"
-        android:layout_marginTop="163dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -62,8 +62,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:src="@mipmap/ic_logo"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="43dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/buttonLogin"
+        android:layout_alignStart="@+id/buttonLogin" />
 
 </RelativeLayout>
