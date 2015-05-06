@@ -1,9 +1,11 @@
 package at.tugraz.flipvloppers.flipvloppers2015.model.items;
 
+import java.io.Serializable;
+
 /**
  * Created by Admin on 22.04.2015.
  */
-public class User {
+public class User implements Serializable {
     int id_;
     String username_;
     String first_name_;
@@ -12,7 +14,10 @@ public class User {
 
     public User()
     {
-
+        username_="";
+        first_name_="";
+        last_name_="";
+        password_="";
     }
 
     public User(LoginResponseUser response, String username, String password)

@@ -12,20 +12,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.FeedListAdapter;
-import at.tugraz.flipvloppers.flipvloppers2015.controller.NewsFeedAddController;
+import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.NewsFeedController;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
-public class NewsfeedActivity extends Activity{
+public class NewsfeedActivity extends Activity {
 
     private ListView listView;
     private FeedListAdapter listAdapter;
@@ -36,12 +32,14 @@ public class NewsfeedActivity extends Activity{
     private EditText message;
     private Button btnSend;
     private Button btnOpen;
+    private NewsFeedController nfCtrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newsfeed);
-        user = new Gson().fromJson(getIntent().getExtras().getString("user"), User.class);
+        user = ControllerFactory.getCurrentUser();
+        nfCtrl = ControllerFactory.GetNewsFeedControllerInstance();
         listView = (ListView) findViewById(R.id.listPosts);
         btnSend = (Button) findViewById(R.id.buttonSend);
         message = (EditText) findViewById(R.id.editTextMessage);
@@ -82,13 +80,11 @@ public class NewsfeedActivity extends Activity{
         });
     }
 
-    public void btnOpen()
-    {
+    public void btnOpen() {
         btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (btnOpen.getText().equals("+"))
-                {
+                if (btnOpen.getText().equals("+")) {
                     messageSection.setVisibility(View.VISIBLE);
                     btnOpen.setText("-");
                 } else {
@@ -105,36 +101,19 @@ public class NewsfeedActivity extends Activity{
         return true;
     }
 
-    public ArrayList<NewsFeed> getNewsfeed()
-    {
-        try {
-            ArrayList<NewsFeed> msgs = new NewsFeedController().execute(user).get();
+    public List<NewsFeed> getNewsfeed() {
+        List<NewsFeed> msgs = nfCtrl.GetNewsFeedList();
 
-            for (NewsFeed feed : msgs)
-            {
-                Log.e("NewsFeedActivity", "msg: " + feed.getMessage());
-            }
-            return msgs;
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        for (NewsFeed feed : msgs) {
+            Log.e("NewsFeedActivity", "msg: " + feed.getMessage());
         }
-        return new ArrayList<NewsFeed>();
+        return msgs;
     }
 
-    public void newFeedPost(NewsFeed new_feed)
-    {
+    public void newFeedPost(NewsFeed new_feed) {
         Log.v("newFeedPost", "sending data to database newFeedPost");
-        try {
-            new NewsFeedAddController().execute(user.getUsername_(), user.getPassword_(), new_feed.getMessage());
-            messageList = new NewsFeedController().execute(user).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        nfCtrl.SendNewsfeedPost(user.getUsername_(), user.getPassword_(), new_feed.getMessage());
+        messageList = nfCtrl.GetNewsFeedList();
     }
 
 }

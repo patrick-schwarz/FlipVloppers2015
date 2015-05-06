@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import java.util.concurrent.ExecutionException;
 
+import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.LoginController;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
@@ -25,11 +26,13 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     private EditText password;
     private TextView error_msg;
     private Button btnlogin;
+    private LoginController loginCtrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loginCtrl = ControllerFactory.GetLoginControllerInstance();
 
         username = (EditText) findViewById(R.id.editTextUsername);
         password = (EditText) findViewById(R.id.editTextPassword);
@@ -70,8 +73,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.editTextUsername:
                 username.setText("");
                 error_msg.setVisibility(View.INVISIBLE);
@@ -85,32 +87,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 login();
                 break;
 
-                //Sending data to another Activity
-                /*
-                nextScreen.putExtra("name", inputName.getText().toString());
-                nextScreen.putExtra("email", inputEmail.getText().toString());
-
-                Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
-
-                //startActivity(nextScreen);
-              //  break;
-        }
-    }
-
-    private void login()
-    {
-        try {
-            Log.v("USER", "calling execute with: " + username.getText().toString() + " " + password.getText().toString());
-            User user = new LoginController().execute(username.getText().toString(), password.getText().toString()).get();
-            if (user == null)
-            {
-                error_msg.setVisibility(View.VISIBLE);
-                return;
-            }
-            Intent nextScreen = new Intent(getApplicationContext(), TabContainerActivity.class);
-            nextScreen.putExtra("user", new Gson().toJson(user));
-
-
             //Sending data to another Activity
                 /*
                 nextScreen.putExtra("name", inputName.getText().toString());
@@ -118,12 +94,28 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                 Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
 
-            startActivity(nextScreen);
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+            //startActivity(nextScreen);
+            //  break;
         }
+    }
+
+    private void login() {
+        Log.v("USER", "calling execute with: " + username.getText().toString() + " " + password.getText().toString());
+        if (!loginCtrl.Login(username.getText().toString(), password.getText().toString())) {
+            error_msg.setVisibility(View.VISIBLE);
+            return;
+        }
+        Intent nextScreen = new Intent(getApplicationContext(), TabContainerActivity.class);
+        nextScreen.putExtra("user", new Gson().toJson(ControllerFactory.getCurrentUser()));
+
+
+        //Sending data to another Activity
+                /*
+                nextScreen.putExtra("name", inputName.getText().toString());
+                nextScreen.putExtra("email", inputEmail.getText().toString());
+
+                Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
+
+        startActivity(nextScreen);
     }
 }
