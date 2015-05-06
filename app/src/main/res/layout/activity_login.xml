@@ -14,7 +14,8 @@
         android:text="Username"
         android:ems="10"
         android:id="@+id/editTextUsername"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="163dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -26,8 +27,7 @@
         android:text="password"
         android:password="true"
         android:layout_below="@+id/editTextUsername"
-        android:layout_alignLeft="@+id/editTextUsername"
-        android:layout_alignStart="@+id/editTextUsername" />
+        android:layout_centerHorizontal="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -35,19 +35,17 @@
         android:text="Stay Logged In"
         android:id="@+id/checkBoxStayLoggedIn"
         android:layout_below="@+id/editTextPassword"
-        android:layout_alignLeft="@+id/editTextPassword"
-        android:layout_alignStart="@+id/editTextPassword" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/buttonLogin"
-        android:layout_below="@+id/checkBoxStayLoggedIn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
         android:onClick="onClick"
-        android:backgroundTint="#69d0f6" />
+        android:backgroundTint="#69d0f6"
+        android:layout_below="@+id/checkBoxStayLoggedIn"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,9 +54,16 @@
         android:id="@+id/textViewError"
         android:textColor="#F00"
         android:visibility="invisible"
-        android:layout_below="@+id/checkBoxStayLoggedIn"
-        android:layout_alignLeft="@+id/checkBoxStayLoggedIn"
-        android:layout_alignStart="@+id/checkBoxStayLoggedIn"
-        android:layout_marginLeft="15px" />
+        android:layout_below="@+id/buttonLogin"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@mipmap/ic_logo"
+        android:layout_marginTop="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
