@@ -107,8 +107,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 error_msg.setVisibility(View.VISIBLE);
                 return;
             }
-            Intent nextScreen = new Intent(getApplicationContext(), NewsfeedActivity.class);
+            Intent nextScreen = new Intent(getApplicationContext(), TabContainerActivity.class);
             nextScreen.putExtra("user", new Gson().toJson(user));
+
 
             //Sending data to another Activity
                 /*

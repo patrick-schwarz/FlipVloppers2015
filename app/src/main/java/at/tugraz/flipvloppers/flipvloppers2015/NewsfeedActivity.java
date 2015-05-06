@@ -2,6 +2,7 @@ package at.tugraz.flipvloppers.flipvloppers2015;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -75,7 +76,8 @@ public class NewsfeedActivity extends Activity{
 
                 listAdapter.notifyDataSetChanged();
                 finish();
-                startActivity(getIntent());
+                Intent intent = getParent().getIntent();
+                startActivity(intent);
             }
         });
     }
