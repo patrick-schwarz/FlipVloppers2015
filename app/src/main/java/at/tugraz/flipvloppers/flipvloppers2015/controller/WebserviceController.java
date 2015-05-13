@@ -204,11 +204,14 @@ public class WebserviceController {
         List<NewsFeed> result = null;
         try {
             User user = ControllerFactory.getCurrentUser();
-            Log.e("NewsReader", user.getUsername_() + user.getPassword_());
+            //Log.e("NewsReader", user.getUsername_() + user.getPassword_());
             result = task.execute(user.getUsername_(), user.getPassword_()).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
         return result;
