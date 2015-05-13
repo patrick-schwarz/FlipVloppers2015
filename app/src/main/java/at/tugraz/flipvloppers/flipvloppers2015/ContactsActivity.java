@@ -47,9 +47,9 @@ public class ContactsActivity extends ActionBarActivity {
 
         btnSearch();
 
-        List<User> users =  uCtrl.GetUsers();
+        List<User> users =  uCtrl.getUsers();
         Log.e("Contacts", "Got " + users.size() + " Users");
-        listAdapter = new ContactsListAdapter( this, uCtrl.GetUsers());
+        listAdapter = new ContactsListAdapter( this, uCtrl.getUsers());
         listContacts.setAdapter(listAdapter);
 
         //Generate test data
@@ -81,19 +81,37 @@ public class ContactsActivity extends ActionBarActivity {
 
 
     public void btnSearch() {
+        searchContacts.setOnCloseListener(new SearchView.OnCloseListener(){
 
+            @Override
+            public boolean onClose() {
+
+                listAdapter = new ContactsListAdapter(contactsActivity, uCtrl.getUsers());
+                listContacts.setAdapter(listAdapter);
+                return false;
+            }
+
+        });
         searchContacts.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                listAdapter = new ContactsListAdapter(contactsActivity, uCtrl.GetUsers(query));
-                listContacts.setAdapter(listAdapter);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(newText.replace(" ","").equals(""))
+                {
+                    listAdapter = new ContactsListAdapter(contactsActivity, uCtrl.getUsers());
+                    listContacts.setAdapter(listAdapter);
+                }
+                else
+                {
+                    listAdapter = new ContactsListAdapter(contactsActivity, uCtrl.getUsers(newText));
+                    listContacts.setAdapter(listAdapter);
+                }
                 return false;
             }
 

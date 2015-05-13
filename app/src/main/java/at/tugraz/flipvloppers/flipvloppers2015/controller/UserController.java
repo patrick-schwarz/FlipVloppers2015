@@ -45,6 +45,9 @@ public class UserController {
         List<User> response = getUsers();
         List<User> result = new ArrayList<User>();
 
+        if(filter.replace(" ","") == "")
+            return response;
+
         for (User user : response) {
             if (user.getUsername_().toLowerCase().startsWith(filter.toLowerCase()) ||
                     user.getFirstName().toLowerCase().startsWith(filter.toLowerCase()) ||

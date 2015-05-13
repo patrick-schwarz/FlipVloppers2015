@@ -56,6 +56,14 @@ public class User implements Serializable {
     public String getLastName() {
         return last_name_;
     }
+    public String getName()
+    {
+        return last_name_ + " " + first_name_;
+    }
+    public String getNameUsername()
+    {
+        return getName() + " (" + username_ + ")";
+    }
 
     public void setLastName(String last_name_) {
         this.last_name_ = last_name_;

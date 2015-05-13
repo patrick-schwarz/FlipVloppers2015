@@ -59,10 +59,10 @@ public class ContactsListAdapter extends BaseAdapter {
         User user = users.get(i);
 
         //TODO get sender name
-        contact_lastname_firstname.setText(user.getLastName() + " " + user.getFirstName());
+        contact_lastname_firstname.setText(user.getNameUsername());
         contact_lastname_firstname.setVisibility(View.VISIBLE);
-
 
         return view;
     }
+
 }

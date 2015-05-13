@@ -75,7 +75,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
         switch (view.getId()) {
             case R.id.editTextUsername:
-                username.setText("");
+                String username_s = username.getText().toString();
+                if(username_s.equals("Username"))
+                    username.setText("");
                 error_msg.setVisibility(View.INVISIBLE);
                 break;
             case R.id.editTextPassword:
