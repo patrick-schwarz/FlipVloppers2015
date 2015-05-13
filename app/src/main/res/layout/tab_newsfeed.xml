@@ -15,7 +15,7 @@
         android:layout_height="0dp"
         android:layout_weight="30"
         android:adjustViewBounds="false"
-        android:src="@mipmap/ic_action_mail" />
+        android:src="@mipmap/ic_action_star" />
 
     <TextView
         android:id="@+id/title"

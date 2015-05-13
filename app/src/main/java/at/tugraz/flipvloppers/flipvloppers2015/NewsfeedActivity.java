@@ -37,12 +37,14 @@ public class NewsfeedActivity extends Fragment{
     private Button btnSend;
     private Button btnOpen;
     private NewsFeedController nfCtrl = null;
+    private View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        View v = inflater.inflate(R.layout.activity_newsfeed, container, false);
+        if (v == null)
+            v = inflater.inflate(R.layout.activity_newsfeed, container, false);
+
         user = new Gson().fromJson(getActivity().getIntent().getExtras().getString("user"), User.class);
         nfCtrl = ControllerFactory.GetNewsFeedControllerInstance();
         listView = (ListView) v.findViewById(R.id.listPosts);
@@ -80,6 +82,13 @@ public class NewsfeedActivity extends Fragment{
      
     }*/
         //NewsFeed new_msg = new NewsFeed(0, "1", "username", "Mr", new Date(1000), "erster test");
+
+/*    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().setContentView(R.layout.activity_newsfeed);
+    }*/
 
     public void refreshNews()
     {

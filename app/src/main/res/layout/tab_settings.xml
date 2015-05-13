@@ -3,7 +3,6 @@
     android:layout_width="0dip"
     android:layout_height="55dip"
     android:layout_weight="1"
-
     android:orientation="vertical"
     android:padding="5dp"
     android:weightSum="55" >
@@ -15,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="30"
         android:adjustViewBounds="false"
-        android:src="@mipmap/ic_action_star" />
+        android:src="@mipmap/ic_action_select_all" />
 
     <TextView
         android:id="@+id/title"

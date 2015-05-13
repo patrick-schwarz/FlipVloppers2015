@@ -20,53 +20,32 @@ public class TabContainerActivity extends FragmentActivity {
 
         Intent intent;
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        mTabHost.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {}
+
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                mTabHost.getViewTreeObserver().removeOnTouchModeChangeListener(mTabHost);
+            }
+        });
+
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         View newsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_newsfeed,null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("newsfeed").setIndicator(newsView), NewsfeedActivity.class, null
-        );
-        View settingsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_settings,null);
-        mTabHost.addTab(
-                mTabHost.newTabSpec("settings").setIndicator(settingsView),
-                SettingsAcitivity.class, null
         );
         View contactsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_contacts,null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("contacts").setIndicator(contactsView),
                 ContactsActivity.class, null
         );
-
-
-//        TabHost tabHost = getTabHost();
-//        TabHost.TabSpec spec;
-//        Intent intent;
-//        Resources res = getResources();
-//        Drawable drawable = res.getDrawable(R.mipmap.ic_action_mail);
-//
-//        intent = new Intent().setClass(this, NewsfeedActivity.class);
-//        String userstring = getIntent().getExtras().getString("user");
-//        intent.putExtra("user", userstring);
-//        spec = tabHost.newTabSpec("Newsfeed").setIndicator("News",drawable)
-//                .setContent(intent);
-//        tabHost.addTab(spec);
-//
-//        drawable = res.getDrawable(R.mipmap.ic_action_user);
-//        intent = new Intent().setClass(this, SettingsAcitivity.class);
-//        spec = tabHost.newTabSpec("Contacts").setIndicator("Contacts",drawable)
-//                .setContent(intent);
-//        tabHost.addTab(spec);
-//
-//        drawable = res.getDrawable(R.mipmap.ic_action_mail_add);
-//        intent = new Intent().setClass(this, SettingsAcitivity.class);
-//        spec = tabHost.newTabSpec("PrivateMessage").setIndicator("Chat",drawable)
-//                .setContent(intent);
-//        tabHost.addTab(spec);
-//
-//        drawable = res.getDrawable(R.mipmap.ic_action_star);
-//        intent = new Intent().setClass(this, SettingsAcitivity.class);
-//        spec = tabHost.newTabSpec("Settings").setIndicator("Settings",drawable)
-//                .setContent(intent);
-//        tabHost.addTab(spec);
+        View settingsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_settings,null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("settings").setIndicator(settingsView),
+                SettingsAcitivity.class, null
+        );
 
     }
 
