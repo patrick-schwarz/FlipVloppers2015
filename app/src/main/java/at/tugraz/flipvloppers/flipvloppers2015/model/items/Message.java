@@ -18,11 +18,6 @@ public class Message {
     public Message()
     {
         id_ = sid_++;
-        idgroup_ = 0;
-        id_user_sender = 0;
-        id_user_receiver = 0;
-        message_type_id = 1;
-        text = "Empty";
         create_time = new Date();
     }
 

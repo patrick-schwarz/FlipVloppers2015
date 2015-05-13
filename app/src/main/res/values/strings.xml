@@ -3,4 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_tab_container">TabContainerActivity</string>
+    <string name="title_activity_settings_acitivity">SettingsAcitivity</string>
+    <string name="title_activity_contacts">ContactsActivity</string>
 </resources>

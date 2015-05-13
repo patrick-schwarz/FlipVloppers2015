@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/title_border"
+        android:weightSum="1">
+
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="match_parent" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Contacts"
+            android:id="@+id/textViewTitleContacts"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_weight="0.95" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/feed_bg"
+        android:weightSum="1">
+
+        <SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/feed_bg"
+            android:title="Search"
+            android:showAsAction="ifRoom|collapseActionView"
+            android:id="@+id/searchViewContacts"></SearchView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/feed_bg">
+
+        <ListView
+            android:id="@+id/listContacts"
+            android:layout_width="fill_parent"
+            android:layout_height="467dp"
+            android:divider="@null" />
+    </LinearLayout>
+
+</LinearLayout>
