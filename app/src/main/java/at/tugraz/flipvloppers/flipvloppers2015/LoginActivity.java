@@ -70,18 +70,25 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean del_emtpytext_password = true;
+    private boolean del_emtpytext_username = true;
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
             case R.id.editTextUsername:
                 String username_s = username.getText().toString();
-                if(username_s.equals("Username"))
+                if(del_emtpytext_username) {
                     username.setText("");
+                    del_emtpytext_username = false;
+                }
                 error_msg.setVisibility(View.INVISIBLE);
                 break;
             case R.id.editTextPassword:
-                password.setText("");
+                if(del_emtpytext_password) {
+                    password.setText("");
+                    del_emtpytext_password = false;
+                }
                 error_msg.setVisibility(View.INVISIBLE);
                 break;
 

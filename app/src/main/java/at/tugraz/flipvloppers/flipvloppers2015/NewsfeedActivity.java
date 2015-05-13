@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -38,7 +39,7 @@ public class NewsfeedActivity extends Fragment{
     private LinearLayout messageSection;
     private EditText message;
     private Button btnSend;
-    private Button btnOpen;
+    private ImageButton btnOpen;
     private NewsFeedController nfCtrl = null;
     private View v;
     private Activity activity_;
@@ -53,7 +54,7 @@ public class NewsfeedActivity extends Fragment{
         listView = (ListView) v.findViewById(R.id.listPosts);
         btnSend = (Button) v.findViewById(R.id.buttonSend);
         message = (EditText) v.findViewById(R.id.editTextMessage);
-        btnOpen = (Button) v.findViewById(R.id.buttonOpen);
+        btnOpen = (ImageButton) v.findViewById(R.id.buttonOpen);
         messageSection = (LinearLayout) v.findViewById(R.id.llMessageSection);
         if (messageSection!=null)
             messageSection.setVisibility(View.GONE);
@@ -190,18 +191,21 @@ public class NewsfeedActivity extends Fragment{
         });
     }
 
+    boolean btnOpen_open = false;
     public void btnOpen()
     {
         btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (btnOpen.getText().equals("+"))
+                if (!btnOpen_open)
                 {
                     messageSection.setVisibility(View.VISIBLE);
-                    btnOpen.setText("-");
+                    btnOpen.setImageResource(R.mipmap.ic_action_overflow);
+                    btnOpen_open = true;
                 } else {
                     messageSection.setVisibility(View.GONE);
-                    btnOpen.setText("+");
+                    btnOpen.setImageResource(R.mipmap.ic_action_mail_add);
+                    btnOpen_open = false;
                 }
             }
         });
