@@ -12,7 +12,6 @@ public class LoginController {
     public boolean Login(String username,String password)
     {
         User user = ControllerFactory.GetWebserviceControllerInstance().CheckLogin(username, password);
-        Log.e("Login","Logged in " + user.getUsername_());
         ControllerFactory.setCurrentUser(user);
         return (user != null);
     }
