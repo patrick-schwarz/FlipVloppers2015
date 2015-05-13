@@ -1,5 +1,6 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -28,11 +29,13 @@ public class ContactsActivity extends Fragment {
 
     private UserController uCtrl = null;
     private ContactsActivity contactsActivity;
+    private  View v;
+    private Activity activity_;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        View v = inflater.inflate(R.layout.activity_contacts, container, false);
+        v = inflater.inflate(R.layout.activity_contacts, container, false);
+        activity_ = getActivity();
         //setContentView(R.layout.activity_contacts);
         contactsActivity = this;
         user = ControllerFactory.getCurrentUser();

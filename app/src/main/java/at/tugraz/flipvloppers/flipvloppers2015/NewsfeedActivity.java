@@ -1,6 +1,7 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,14 +41,14 @@ public class NewsfeedActivity extends Fragment{
     private Button btnOpen;
     private NewsFeedController nfCtrl = null;
     private View v;
+    private Activity activity_;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (v == null)
-            v = inflater.inflate(R.layout.activity_newsfeed, container, false);
-
-        user = new Gson().fromJson(getActivity().getIntent().getExtras().getString("user"), User.class);
+        v = inflater.inflate(R.layout.activity_newsfeed, container, false);
+        activity_ = getActivity();
+        user = ControllerFactory.getCurrentUser();
         nfCtrl = ControllerFactory.GetNewsFeedControllerInstance();
         listView = (ListView) v.findViewById(R.id.listPosts);
         btnSend = (Button) v.findViewById(R.id.buttonSend);
@@ -96,7 +97,7 @@ public class NewsfeedActivity extends Fragment{
                     synchronized (this) {
                         wait(5000);
 
-                        getActivity().runOnUiThread(new Runnable() {
+                        activity_.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 System.out.println("HELLO!!!!!!! UPDATE 1 !!!!! THIS");
