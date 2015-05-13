@@ -120,7 +120,7 @@ public class NewsfeedActivity extends Fragment{
                         });
 
                     }
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 //Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
