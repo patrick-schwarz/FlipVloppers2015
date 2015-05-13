@@ -1,31 +1,24 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import java.util.Date;
 import java.util.List;
 
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.ContactsListAdapter;
-import at.tugraz.flipvloppers.flipvloppers2015.adapter.FeedListAdapter;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
-import at.tugraz.flipvloppers.flipvloppers2015.controller.NewsFeedController;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.UserController;
-import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 
-public class ContactsActivity extends ActionBarActivity {
+public class ContactsActivity extends Fragment {
 
 
     private ListView listContacts;
@@ -36,14 +29,16 @@ public class ContactsActivity extends ActionBarActivity {
     private UserController uCtrl = null;
     private ContactsActivity contactsActivity;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts);
+        View v = inflater.inflate(R.layout.activity_contacts, container, false);
+        //setContentView(R.layout.activity_contacts);
         contactsActivity = this;
         user = ControllerFactory.getCurrentUser();
         uCtrl = ControllerFactory.GetUserControllerInstance();
-        listContacts = (ListView) findViewById(R.id.listContacts);
-        searchContacts = (SearchView) findViewById(R.id.searchViewContacts);
+        listContacts = (ListView) v.findViewById(R.id.listContacts);
+        searchContacts = (SearchView) v.findViewById(R.id.searchViewContacts);
 
         btnSearch();
 
@@ -59,6 +54,8 @@ public class ContactsActivity extends ActionBarActivity {
         //messageList.add(new_msg);
 
         listAdapter.notifyDataSetChanged();
+
+        return v;
     }
 
 
@@ -118,9 +115,10 @@ public class ContactsActivity extends ActionBarActivity {
         });
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
-    }
+    }*/
 }

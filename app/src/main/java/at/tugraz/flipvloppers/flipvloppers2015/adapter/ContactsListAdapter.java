@@ -1,7 +1,7 @@
 package at.tugraz.flipvloppers.flipvloppers2015.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import at.tugraz.flipvloppers.flipvloppers2015.R;
-import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 /**
@@ -21,12 +19,12 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
  */
 public class ContactsListAdapter extends BaseAdapter {
 
-    private Activity activity;
+    private Fragment activity;
     private LayoutInflater inflater;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     private List<User> users;
 
-    public ContactsListAdapter(Activity activity, List<User> users) {
+    public ContactsListAdapter(Fragment activity, List<User> users) {
         this.activity = activity;
         this.users = users;
     }
@@ -49,7 +47,7 @@ public class ContactsListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (inflater == null)
-            inflater = (LayoutInflater) activity
+            inflater = (LayoutInflater) activity.getActivity()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (view == null)
             view = inflater.inflate(R.layout.contact_item, null);

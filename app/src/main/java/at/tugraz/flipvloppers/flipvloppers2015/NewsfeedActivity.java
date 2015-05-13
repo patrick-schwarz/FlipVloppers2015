@@ -1,13 +1,11 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,10 +15,8 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.FeedListAdapter;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
@@ -45,6 +41,7 @@ public class NewsfeedActivity extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         View v = inflater.inflate(R.layout.activity_newsfeed, container, false);
         user = new Gson().fromJson(getActivity().getIntent().getExtras().getString("user"), User.class);
         nfCtrl = ControllerFactory.GetNewsFeedControllerInstance();
@@ -74,13 +71,14 @@ public class NewsfeedActivity extends Fragment{
         return v;
     }
 
+    /*
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Generate test data
      
-    }
+    }*/
         //NewsFeed new_msg = new NewsFeed(0, "1", "username", "Mr", new Date(1000), "erster test");
 
     public void refreshNews()

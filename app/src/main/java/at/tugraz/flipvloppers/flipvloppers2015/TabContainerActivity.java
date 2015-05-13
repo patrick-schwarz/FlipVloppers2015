@@ -1,19 +1,13 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
-import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.content.Intent;
 import android.view.View;
-import android.widget.TabHost;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-
-import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 
 public class TabContainerActivity extends FragmentActivity {
@@ -35,6 +29,11 @@ public class TabContainerActivity extends FragmentActivity {
         mTabHost.addTab(
                 mTabHost.newTabSpec("settings").setIndicator(settingsView),
                 SettingsAcitivity.class, null
+        );
+        View contactsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_contacts,null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("contacts").setIndicator(contactsView),
+                ContactsActivity.class, null
         );
 
 
