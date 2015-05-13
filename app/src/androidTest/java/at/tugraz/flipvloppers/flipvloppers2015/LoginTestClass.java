@@ -39,7 +39,7 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
     private void login()
     {
         mySolo.clickOnButton("Login");
-        mySolo.waitForActivity(NewsfeedActivity.class, 1000);
+        //mySolo.waitForActivity(NewsfeedActivity.class, 1000);
         assertTrue("Newsfeed", mySolo.waitForText("Newsfeed"));
 
     }

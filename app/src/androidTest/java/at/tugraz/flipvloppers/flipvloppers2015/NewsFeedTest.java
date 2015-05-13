@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.robotium.solo.Solo;
 
-import at.tugraz.flipvloppers.flipvloppers2015.model.items.LoginResponseUser;
-import at.tugraz.flipvloppers.flipvloppers2015.model.items.Message;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
@@ -18,7 +16,7 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
  * Created by Admin on 29.04.2015.
  */
 
-public class NewsFeedTest extends ActivityInstrumentationTestCase2<NewsfeedActivity> {
+public class NewsFeedTest extends ActivityInstrumentationTestCase2{
     private Solo mySolo;
     private User user;
     public NewsFeedTest() {
@@ -40,8 +38,8 @@ public class NewsFeedTest extends ActivityInstrumentationTestCase2<NewsfeedActiv
 
         mySolo = new Solo(getInstrumentation(), getActivity());
 
-
-        getActivity().user = user;
+        //TODO fix
+        //getActivity().user = user;
         //Utils.Login(mySolo);
     }
 

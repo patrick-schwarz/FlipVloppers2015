@@ -2,6 +2,7 @@ package at.tugraz.flipvloppers.flipvloppers2015.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,12 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 
 public class FeedListAdapter extends BaseAdapter{
 
-    private Activity activity;
+    private Fragment activity;
     private LayoutInflater inflater;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     private List<NewsFeed> messages;
 
-    public FeedListAdapter(Activity activity, List<NewsFeed> messages) {
+    public FeedListAdapter(Fragment activity, List<NewsFeed> messages) {
         this.activity = activity;
         this.messages = messages;
     }
@@ -45,8 +46,7 @@ public class FeedListAdapter extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (inflater == null)
-            inflater = (LayoutInflater) activity
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater) activity.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (view == null)
             view = inflater.inflate(R.layout.feed_post, null);
 
