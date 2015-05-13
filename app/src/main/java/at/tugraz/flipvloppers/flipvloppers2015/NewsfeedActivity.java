@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.FeedListAdapter;
@@ -31,13 +32,13 @@ public class NewsfeedActivity extends Fragment{
     private List<NewsFeed> messageList;
     private User user;
     private Intent intent;
+    private List<NewsFeed> updatedMessageList = new LinkedList<>();
 
     private LinearLayout messageSection;
     private EditText message;
     private Button btnSend;
     private Button btnOpen;
     private NewsFeedController nfCtrl = null;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,6 +68,8 @@ public class NewsfeedActivity extends Fragment{
         thread.start();
 
 
+        refreshView();
+
         listAdapter.notifyDataSetChanged();
         return v;
     }
@@ -81,21 +84,80 @@ public class NewsfeedActivity extends Fragment{
     }*/
         //NewsFeed new_msg = new NewsFeed(0, "1", "username", "Mr", new Date(1000), "erster test");
 
+    private void refreshView()
+    {
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    synchronized (this) {
+                        wait(5000);
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                System.out.println("HELLO!!!!!!! UPDATE 1 !!!!! THIS");
+                                if (listIsAtTop()) {
+                                    //List<NewsFeed> new_list= getNewsfeed();
+                                    System.out.println("CHECK FOR SIZE 889911");
+                                    System.out.println("Updated Message List Size is " + updatedMessageList.size());
+                                    if ((messageList.size() != updatedMessageList.size()) && updatedMessageList.size() > 0) {
+                                        messageList.clear();
+                                        messageList.addAll(updatedMessageList);
+                                        System.out.println("HELLO!!!!!!! CLEAR THIS");
+                                        listAdapter.notifyDataSetChanged();
+                                    }
+
+
+                                    return;
+                                }
+                                System.out.println("HELLO!!!!!!! !!!!!!!!!!!!! UPDATE 2 THIS");
+                            }
+                        });
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
+                //startActivity(mainActivity);
+            };
+        };
+        thread.start();
+    }
+
     public void refreshNews()
     {
+        /*runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                    try {
+                        while(true) {
+                            Thread.sleep(5000);
+                            if (listIsAtTop()) {
+                                List<NewsFeed> new_list= getNewsfeed();
+                                updatedMessageList.clear();
+                                updatedMessageList.addAll(new_list);
+                                refreshView();
+                                return;
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+        });*/
+
         try {
             while(true) {
                 Thread.sleep(5000);
-                if (listIsAtTop()) {
-                    List<NewsFeed> new_list= getNewsfeed();
-                    if (messageList.size() == new_list.size())
-                        continue;
 
-                    getActivity().finish();
-                    Intent intent = getActivity().getIntent();
-                    startActivity(intent);
-                    return;
-                }
+                System.out.println("UPDATE THIS VIEW? 1");
+                updatedMessageList = getNewsfeed();
+                System.out.println("UPDATE THIS VIEW? 2");
+
+                refreshView();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -151,7 +213,7 @@ public class NewsfeedActivity extends Fragment{
         List<NewsFeed> msgs = nfCtrl.GetNewsFeedList();
 
         for (NewsFeed feed : msgs) {
-            Log.e("NewsFeedActivity", "msg: " + feed.getMessage());
+            //Log.e("NewsFeedActivity", "msg: " + feed.getMessage());
         }
         return msgs;
     }
