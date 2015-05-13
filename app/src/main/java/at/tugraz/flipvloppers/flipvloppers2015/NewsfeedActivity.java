@@ -4,16 +4,23 @@ package at.tugraz.flipvloppers.flipvloppers2015;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.FeedListAdapter;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
@@ -21,12 +28,13 @@ import at.tugraz.flipvloppers.flipvloppers2015.controller.NewsFeedController;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
-public class NewsfeedActivity extends Activity {
+public class NewsfeedActivity extends Fragment{
 
     private ListView listView;
     private FeedListAdapter listAdapter;
     private List<NewsFeed> messageList;
-    public User user;
+    private User user;
+    private Intent intent;
 
     private LinearLayout messageSection;
     private EditText message;
@@ -35,17 +43,18 @@ public class NewsfeedActivity extends Activity {
     private NewsFeedController nfCtrl = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_newsfeed);
-        user = ControllerFactory.getCurrentUser();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.activity_newsfeed, container, false);
+        user = new Gson().fromJson(getActivity().getIntent().getExtras().getString("user"), User.class);
         nfCtrl = ControllerFactory.GetNewsFeedControllerInstance();
-        listView = (ListView) findViewById(R.id.listPosts);
-        btnSend = (Button) findViewById(R.id.buttonSend);
-        message = (EditText) findViewById(R.id.editTextMessage);
-        btnOpen = (Button) findViewById(R.id.buttonOpen);
-        messageSection = (LinearLayout) findViewById(R.id.llMessageSection);
-        messageSection.setVisibility(View.GONE);
+        listView = (ListView) v.findViewById(R.id.listPosts);
+        btnSend = (Button) v.findViewById(R.id.buttonSend);
+        message = (EditText) v.findViewById(R.id.editTextMessage);
+        btnOpen = (Button) v.findViewById(R.id.buttonOpen);
+        messageSection = (LinearLayout) v.findViewById(R.id.llMessageSection);
+        if (messageSection!=null)
+            messageSection.setVisibility(View.GONE);
 
         messageList = getNewsfeed();
         btnClick();
@@ -56,13 +65,23 @@ public class NewsfeedActivity extends Activity {
         Thread thread = new Thread(){
             public void run(){
                 refreshNews();
-            }
+            } 
         };
-
         thread.start();
 
+
         listAdapter.notifyDataSetChanged();
+        return v;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //Generate test data
+     
+    }
+        //NewsFeed new_msg = new NewsFeed(0, "1", "username", "Mr", new Date(1000), "erster test");
 
     public void refreshNews()
     {
@@ -74,8 +93,8 @@ public class NewsfeedActivity extends Activity {
                     if (messageList.size() == new_list.size())
                         continue;
 
-                    finish();
-                    Intent intent = getParent().getIntent();
+                    getActivity().finish();
+                    Intent intent = getActivity().getIntent();
                     startActivity(intent);
                     return;
                 }
@@ -96,22 +115,24 @@ public class NewsfeedActivity extends Activity {
             public void onClick(View arg0) {
                 NewsFeed message1 = new NewsFeed(1, user.getUsername_(), user.getLastName(), user.getFirstName(), new Date(),
                         message.getText().toString());
-
+                //messageList.add(message1);
                 newFeedPost(message1);
 
                 listAdapter.notifyDataSetChanged();
-                finish();
-                Intent intent = getParent().getIntent();
+                getActivity().finish();
+                intent = getActivity().getIntent();
                 startActivity(intent);
             }
         });
     }
 
-    public void btnOpen() {
+    public void btnOpen()
+    {
         btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (btnOpen.getText().equals("+")) {
+                if (btnOpen.getText().equals("+"))
+                {
                     messageSection.setVisibility(View.VISIBLE);
                     btnOpen.setText("-");
                 } else {
@@ -122,11 +143,11 @@ public class NewsfeedActivity extends Activity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_login, menu);
+//        return true;
+//    }
 
     public List<NewsFeed> getNewsfeed() {
         List<NewsFeed> msgs = nfCtrl.GetNewsFeedList();
