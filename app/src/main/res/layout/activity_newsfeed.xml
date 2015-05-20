@@ -35,14 +35,129 @@ android:layout_height="fill_parent">
 
 
 <LinearLayout
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="66dp"
+    android:layout_height="wrap_content"
     android:weightSum="1"
     android:id="@+id/llMessageSection"
     android:background="@color/feed_bg">
 
-    <com.rockerhieu.emojicon.EmojiconEditText
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/imageAngry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_angry" />
+
+        <ImageView
+            android:id="@+id/imageAnonymous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_anonymous" />
+
+        <ImageView
+            android:id="@+id/imageBigeyes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_bigeyes" />
+        <ImageView
+            android:id="@+id/imageBlink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_blink" />
+        <ImageView
+            android:id="@+id/imageCoffee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_coffee" />
+        <ImageView
+            android:id="@+id/imageDevil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_devil" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/imageGentleman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_gentleman" />
+
+        <ImageView
+            android:id="@+id/imageParty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_party" />
+
+        <ImageView
+            android:id="@+id/imageSad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_sad" />
+        <ImageView
+            android:id="@+id/imageThumbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_thumbs_up" />
+        <ImageView
+            android:id="@+id/imageTongue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_tongue" />
+        <ImageView
+            android:id="@+id/imageSmile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_pro_smile" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+
+
+
+
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:inputType="textMultiLine"
@@ -59,6 +174,8 @@ android:layout_height="fill_parent">
         android:id="@+id/buttonSend"
         android:background="@color/feed_bg"
         android:backgroundTint="#69d0f6" />
+
+    </LinearLayout>
 </LinearLayout>
 
 <LinearLayout
