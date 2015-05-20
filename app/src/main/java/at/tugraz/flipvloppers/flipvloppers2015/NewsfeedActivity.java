@@ -15,8 +15,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
