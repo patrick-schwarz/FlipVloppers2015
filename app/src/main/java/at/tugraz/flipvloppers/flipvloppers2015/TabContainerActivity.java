@@ -1,6 +1,8 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -8,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TabHost;
+
+import java.util.ResourceBundle;
 
 
 public class TabContainerActivity extends FragmentActivity {
@@ -31,6 +36,21 @@ public class TabContainerActivity extends FragmentActivity {
             }
         });
 
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            @Override
+            public void onTabChanged(String s) {
+                for(int i=0;i<mTabHost.getTabWidget().getChildCount();i++)
+                {
+                    mTabHost.getTabWidget().getChildAt(i).setBackgroundColor(0xFF0099);
+                }
+
+                    mTabHost.getCurrentTabView().setBackgroundResource(R.color.feed_post_border);
+
+
+            }
+
+        });
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         View newsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_newsfeed,null);
         mTabHost.addTab(
@@ -48,6 +68,7 @@ public class TabContainerActivity extends FragmentActivity {
         );
 
     }
+
 
 
     @Override
