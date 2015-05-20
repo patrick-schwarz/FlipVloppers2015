@@ -3,8 +3,12 @@ package at.tugraz.flipvloppers.flipvloppers2015;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +16,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.FeedListAdapter;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
@@ -41,6 +47,10 @@ public class NewsfeedActivity extends Fragment{
     private NewsFeedController nfCtrl = null;
     private View v;
     private Activity activity_;
+
+    private ImageView imageSad, imageSmile, imageAngry, imageAnonymous,
+            imageCoffee, imageTongue, imageThumb, imageDevil, imageGentleman,
+            imageBlink, imageBigeyes, imageParty;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,8 +84,53 @@ public class NewsfeedActivity extends Fragment{
         refreshView();
 
         listAdapter.notifyDataSetChanged();
+
+
+        // Init Emojis
+        imageSad = (ImageView) v.findViewById(R.id.imageSad);
+        imageSmile = (ImageView) v.findViewById(R.id.imageSmile);
+        imageAngry = (ImageView) v.findViewById(R.id.imageAngry);
+        imageAnonymous = (ImageView) v.findViewById(R.id.imageAnonymous);
+        imageCoffee = (ImageView) v.findViewById(R.id.imageCoffee);
+        imageTongue = (ImageView) v.findViewById(R.id.imageTongue);
+        imageThumb = (ImageView) v.findViewById(R.id.imageThumbs);
+        imageDevil = (ImageView) v.findViewById(R.id.imageDevil);
+        imageGentleman = (ImageView) v.findViewById(R.id.imageGentleman);
+        imageBlink = (ImageView) v.findViewById(R.id.imageBlink);
+        imageBigeyes = (ImageView) v.findViewById(R.id.imageBigeyes);
+        imageParty = (ImageView) v.findViewById(R.id.imageParty);
+
+        imageSad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":sad:");
+
+                //ImageView tmp = imageSad;
+                //addImageBetweentext(tmp.getDrawable());
+            }
+        });
+
+
         return v;
     }
+
+    private void addImageBetweentext(Drawable drawable) {
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 2, drawable.getIntrinsicHeight() / 2);
+
+        int selectionCursor = message.getSelectionStart();
+        message.getText().insert(selectionCursor, ":sad:");
+        selectionCursor = message.getSelectionStart();
+
+        SpannableStringBuilder builder = new SpannableStringBuilder(message.getText());
+        builder.setSpan(new ImageSpan(drawable), selectionCursor - ":sad:".length(), selectionCursor, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        message.setText(builder);
+        message.setSelection(selectionCursor);
+
+        
+    }
+
 
     /*
     @Override
@@ -83,7 +138,7 @@ public class NewsfeedActivity extends Fragment{
         super.onCreate(savedInstanceState);
 
         //Generate test data
-     
+
     }*/
         //NewsFeed new_msg = new NewsFeed(0, "1", "username", "Mr", new Date(1000), "erster test");
 
@@ -99,22 +154,16 @@ public class NewsfeedActivity extends Fragment{
                         activity_.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                System.out.println("HELLO!!!!!!! UPDATE 1 !!!!! THIS");
                                 if (listIsAtTop()) {
-                                    //List<NewsFeed> new_list= getNewsfeed();
-                                    System.out.println("CHECK FOR SIZE 889911");
-                                    System.out.println("Updated Message List Size is " + updatedMessageList.size());
                                     if ((messageList.size() != updatedMessageList.size()) && updatedMessageList.size() > 0) {
                                         messageList.clear();
                                         messageList.addAll(updatedMessageList);
-                                        System.out.println("HELLO!!!!!!! CLEAR THIS");
                                         listAdapter.notifyDataSetChanged();
                                     }
 
 
                                     return;
                                 }
-                                System.out.println("HELLO!!!!!!! !!!!!!!!!!!!! UPDATE 2 THIS");
                             }
                         });
 
@@ -122,8 +171,6 @@ public class NewsfeedActivity extends Fragment{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
-                //startActivity(mainActivity);
             };
         };
         thread.start();
