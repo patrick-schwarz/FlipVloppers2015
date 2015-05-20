@@ -22,7 +22,7 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 /**
  * Created by PS/KW.
  */
-public class ContactsActivityTest extends ActivityInstrumentationTestCase2<ContactsActivity> {
+public class ContactsActivityTest extends ActivityInstrumentationTestCase2 {
     private Solo mySolo;
     public ContactsActivityTest() {
         super(ContactsActivity.class);

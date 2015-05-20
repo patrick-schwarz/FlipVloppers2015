@@ -6,74 +6,36 @@ import java.util.Date;
  * Created by Admin on 22.04.2015.
  */
 public class Message {
-    static int sid_ = 0;
-    int id_;
-    int idgroup_;
-    int id_user_sender;
-    int id_user_receiver;
-    String text;
-    Date create_time;
-    int message_type_id;
 
-    public Message()
+    public int id;
+    public int from_id;
+    public int to_id;
+    public Date date;
+    public String message;
+
+    public Message(int id, int from, int to, String message)
     {
-        id_ = sid_++;
-        create_time = new Date();
+        this.id = id;
+        this.from_id = from_id;
+        this.to_id = to_id;
+        this.date = date;
+        this.message = message;
     }
 
-    public int getMessage_type_id() {
-        return message_type_id;
+
+    public Date getDate() {
+        return date;
     }
 
-    public void setMessage_type_id(int message_type_id) {
-        this.message_type_id = message_type_id;
+    public String getMessage() {
+        return message;
     }
 
-    public int getId_() {
-        return id_;
+    public int getFrom_id() {
+        return from_id;
     }
 
-    public void setId_(int id_) {
-        this.id_ = id_;
-    }
-
-    public int getIdgroup_() {
-        return idgroup_;
-    }
-
-    public void setIdgroup_(int idgroup_) {
-        this.idgroup_ = idgroup_;
-    }
-
-    public int getId_user_sender() {
-        return id_user_sender;
-    }
-
-    public void setId_user_sender(int id_user_sender) {
-        this.id_user_sender = id_user_sender;
-    }
-
-    public int getId_user_receiver() {
-        return id_user_receiver;
-    }
-
-    public void setId_user_receiver(int id_user_receiver) {
-        this.id_user_receiver = id_user_receiver;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Date getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public int getTo_id() {
+        return to_id;
     }
 }
