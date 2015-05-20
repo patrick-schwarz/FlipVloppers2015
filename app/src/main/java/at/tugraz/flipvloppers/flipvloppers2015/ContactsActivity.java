@@ -46,6 +46,9 @@ public class ContactsActivity extends Fragment {
         uCtrl = ControllerFactory.GetUserControllerInstance();
         listContacts = (ListView) v.findViewById(R.id.listContacts);
         searchContacts = (SearchView) v.findViewById(R.id.searchViewContacts);
+        searchContacts.setFocusable(true);
+        searchContacts.setIconified(false);
+        searchContacts.requestFocusFromTouch();
 
         btnSearch();
 
