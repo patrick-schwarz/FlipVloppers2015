@@ -17,7 +17,7 @@ if(!empty($from) && !empty($to) && !empty($password) && !empty($message))
   if ($from_id != -1 && $to_id != -1)
   {
     $query = "INSERT INTO message ( id_user_sender,id_user_receiver, text, message_type_id)
-	  VALUES ('$from_id','$to_id', '$message', 'NEWSF')";
+	  VALUES ('$from_id','$to_id', '$message', 'USERM')";
 
     $result = MYSQL_QUERY($query);
 

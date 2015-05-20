@@ -14,11 +14,7 @@ if(!empty($to) && !empty($from) && !empty($password))
 
   if ($from_id != -1)
   {
-    $query = "SELECT * FROM message m INNER JOIN user u ON (m.id_user_sender = u.iduser) "+
-    "WHERE message_type_id='USERM' AND "+
-    "((m.id_user_receiver = $to_id AND m.id_user_sender = $from_id) OR "+
-    "(m.id_user_receiver = $from_id AND m.id_user_sender = $to_id)) "+
-    "ORDER BY create_time DESC";
+    $query = "SELECT * FROM message m INNER JOIN user u ON (m.id_user_sender = u.iduser) WHERE message_type_id='USERM' AND ((m.id_user_receiver = $to_id) AND (m.id_user_sender=$from_id)) OR ((m.id_user_receiver=$from_id) AND (m.id_user_sender=$to_id)) ORDER BY create_time ASC";
 
     $result = MYSQL_QUERY($query);
 	$number = MYSQL_NUMROWS($result);

@@ -16,11 +16,9 @@ public class MessageController {
     {
         messages = new ArrayList<Message>();
     }
-    public void SendMessageToUser(String text,User to)
+    public void SendMessageToUser(String text,String to)
     {
-        User from = ControllerFactory.getCurrentUser();
-        Message message = new Message(0,from.getId_(),to.getId_(),text);
-        ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(message);
+        ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(to,text);
     }
 
    /* public void SendMessageToGroup(String text,int groupID)
@@ -35,9 +33,8 @@ public class MessageController {
 
     }*/
 
-    public List<Message> GetMessagesFromUser(User from)
+    public List<Message> GetMessagesFromUser(String username_from)
     {
-        User user = ControllerFactory.getCurrentUser();
-        return ControllerFactory.GetWebserviceControllerInstance().GetMessagesFrom(from);
+        return ControllerFactory.GetWebserviceControllerInstance().GetMessagesFrom(username_from);
     }
 }

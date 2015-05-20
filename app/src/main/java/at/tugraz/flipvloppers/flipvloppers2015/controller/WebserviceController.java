@@ -143,7 +143,7 @@ public class WebserviceController {
         task.execute(user.getUsername_(), user.getPassword_(), message);
     }
 
-    public void SendMessageToUser(Message message) {
+    public void SendMessageToUser(String username_to,String text) {
         AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
 
             private static final String TAG = "MessageAdder";
@@ -179,11 +179,9 @@ public class WebserviceController {
         };
 
         User from = ControllerFactory.getCurrentUser();
-        User to = ControllerFactory.GetUserControllerInstance().getUser(message.to_id);
-        System.out.println(from.getUsername_()+ " " + to.getUsername_() + " " +  from.getPassword_()+ " " +  message.getMessage());
-        task.execute(from.getUsername_(), to.getUsername_(), from.getPassword_(), message.getMessage());
+        task.execute(from.getUsername_(), username_to, from.getPassword_(), text);
     }
-    public List<Message> GetMessagesFrom(User from) {
+    public List<Message> GetMessagesFrom(String username_from) {
         AsyncTask<String, Void, List<Message>> task = new AsyncTask<String, Void, List<Message>>() {
 
             private static final String TAG = "MessageReader";
@@ -247,7 +245,7 @@ public class WebserviceController {
         try {
             User to = ControllerFactory.getCurrentUser();
             //Log.e("NewsReader", user.getUsername_() + user.getPassword_());
-            result = task.execute(to.getUsername_(),from.getUsername_(), to.getPassword_()).get();
+            result = task.execute(to.getUsername_(),username_from, to.getPassword_()).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

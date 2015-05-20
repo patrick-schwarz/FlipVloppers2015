@@ -13,12 +13,11 @@ public class Message {
     public Date date;
     public String message;
 
-    public Message(int id, int from, int to, String message)
+    public Message(int id, int from_id, int to_id, String message)
     {
         this.id = id;
         this.from_id = from_id;
         this.to_id = to_id;
-        this.date = date;
         this.message = message;
     }
 

@@ -15,14 +15,12 @@ public class MessageControllerTest extends TestCase {
     LoginController loginCtrl;
     UserController userCtrl;
     MessageController messageCtrl;
-    User current;
     public void setUp() throws Exception {
         super.setUp();
 
         loginCtrl = ControllerFactory.GetLoginControllerInstance();
-        boolean logged_in = loginCtrl.Login("kurt", "123");
+        assertTrue(loginCtrl.Login("kurt", "123"));
         userCtrl = ControllerFactory.GetUserControllerInstance();
-        current = ControllerFactory.getCurrentUser();
         messageCtrl = ControllerFactory.GetMessageControllerInstance();
     }
 
@@ -30,28 +28,40 @@ public class MessageControllerTest extends TestCase {
 
     }
 
-    public void testSendMessageToUser()
-    {
-        messageCtrl.SendMessageToUser("Das ist ein 1. Testtext von kurt!",new User("sexybunny"));
+    public void testSendMessageToUser() throws InterruptedException {
 
-        messageCtrl.SendMessageToUser("Das ist ein 2. Testtext von kurt!",new User("sexybunny"));
+        messageCtrl.SendMessageToUser("Das ist ein 1. Testtext von kurt!",  "sexybunny");
 
-        messageCtrl.SendMessageToUser("Das ist ein 3. Testtext von kurt!",new User("sexybunny"));
+        Thread.sleep(1000);
+
+        messageCtrl.SendMessageToUser("Das ist ein 2. Testtext von kurt!", "sexybunny");
+
+        Thread.sleep(1000);
+
+        messageCtrl.SendMessageToUser("Das ist ein 3. Testtext von kurt!", "sexybunny");
+
+        Thread.sleep(1000);
+
+        assertTrue(loginCtrl.Login("sexybunny", "Asdf1234"));
 
 
-        boolean logged_in = loginCtrl.Login("sexybunny", "Asdf1234");
+        messageCtrl.SendMessageToUser("Das ist ein 1. Testtext von sexybunny!", "kurt");
 
+        Thread.sleep(1000);
 
-        messageCtrl.SendMessageToUser("Das ist ein 1. Testtext von sexybunny!",new User("kurt"));
+        messageCtrl.SendMessageToUser("Das ist ein 2. Testtext von sexybunny!","kurt");
 
-        messageCtrl.SendMessageToUser("Das ist ein 2. Testtext von sexybunny!",new User("kurt"));
+        Thread.sleep(1000);
 
-        messageCtrl.SendMessageToUser("Das ist ein 3. Testtext von sexybunny!",new User("kurt"));
+        messageCtrl.SendMessageToUser("Das ist ein 3. Testtext von sexybunny!","kurt");
 
-        List<Message> messages = messageCtrl.GetMessagesFromUser(new User("kurt"));
+        Thread.sleep(1000);
 
-        assertEquals(messages.get((messages.size() - 1)).getMessage() , "Das ist ein 3. Testtext von sexybunny!");
-        assertEquals(messages.get((messages.size() - 2)).getMessage() , "Das ist ein 2. Testtext von sexybunny!");
-        assertEquals(messages.get((messages.size() - 3)).getMessage() , "Das ist ein 1. Testtext von sexybunny!");
+        List<Message> messages = messageCtrl.GetMessagesFromUser("kurt");
+
+        assertEquals(messages.get((messages.size() - 1)).getMessage(), "Das ist ein 3. Testtext von sexybunny!");
+        assertEquals(messages.get((messages.size() - 2)).getMessage(), "Das ist ein 2. Testtext von sexybunny!");
+        assertEquals(messages.get((messages.size() - 3)).getMessage(), "Das ist ein 1. Testtext von sexybunny!");
+
     }
 }
