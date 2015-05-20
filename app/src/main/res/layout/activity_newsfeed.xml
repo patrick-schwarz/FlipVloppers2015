@@ -41,7 +41,7 @@ android:layout_height="fill_parent">
     android:id="@+id/llMessageSection"
     android:background="@color/feed_bg">
 
-    <EditText
+    <com.rockerhieu.emojicon.EmojiconEditText
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:inputType="textMultiLine"

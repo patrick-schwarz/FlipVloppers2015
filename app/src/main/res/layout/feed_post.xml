@@ -39,7 +39,7 @@
                 android:textSize="@dimen/feed_post_time" />
         </LinearLayout>
 
-        <TextView
+        <com.rockerhieu.emojicon.EmojiconTextView
             android:id="@+id/feed_message"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
