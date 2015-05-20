@@ -1,6 +1,7 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -49,6 +53,20 @@ public class ContactsActivity extends Fragment {
         Log.e("Contacts", "Got " + users.size() + " Users");
         listAdapter = new ContactsListAdapter( this, uCtrl.getUsers());
         listContacts.setAdapter(listAdapter);
+
+
+        listContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // TODO Auto-generated method stub
+                    User from = (User)listAdapter.getItem(position);
+                    Intent nextScreen = new Intent(getActivity().getApplicationContext(), MessageActivity.class);
+                    nextScreen.putExtra("from", new Gson().toJson(from));
+                    startActivity(nextScreen);
+            }
+        });
 
         //Generate test data
 

@@ -218,9 +218,9 @@ public class NewsfeedActivity extends Fragment{
     public List<NewsFeed> getNewsfeed() {
         List<NewsFeed> msgs = nfCtrl.GetNewsFeedList();
 
-        for (NewsFeed feed : msgs) {
+       /* for (NewsFeed feed : msgs) {
             Log.e("NewsFeedActivity", "msg: " + feed.getMessage());
-        }
+        }*/
         return msgs;
     }
 

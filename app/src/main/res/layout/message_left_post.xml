@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/feed_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+
+        android:layout_marginLeft="@dimen/feed_post_margin"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="@dimen/feed_post_margin"
+        android:background="@drawable/feed_background_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/feed_post_padding_top_bottom"
+        android:paddingTop="@dimen/feed_post_padding_top_bottom" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/feed_post_padding_left_right"
+            android:paddingRight="@dimen/feed_post_padding_left_right">
+
+            <TextView
+                android:id="@+id/feed_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/feed_post_profile_name"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/feed_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/time"
+                android:textSize="@dimen/feed_post_time" />
+        </LinearLayout>
+
+        <com.rockerhieu.emojicon.EmojiconTextView
+            android:id="@+id/feed_message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingLeft="@dimen/feed_post_status_pad_left_right"
+            android:paddingRight="@dimen/feed_post_status_pad_left_right"
+            android:paddingTop="@dimen/feed_post_status_pad_top" />
+    </LinearLayout>
+
+</LinearLayout>

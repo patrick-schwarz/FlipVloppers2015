@@ -1,6 +1,7 @@
 package at.tugraz.flipvloppers.flipvloppers2015.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import at.tugraz.flipvloppers.flipvloppers2015.MessageActivity;
 import at.tugraz.flipvloppers.flipvloppers2015.R;
+import at.tugraz.flipvloppers.flipvloppers2015.TabContainerActivity;
+import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 /**
@@ -54,10 +60,10 @@ public class ContactsListAdapter extends BaseAdapter {
 
         TextView contact_lastname_firstname = (TextView) view.findViewById(R.id.contact_lastname_firstname);
 
-        User user = users.get(i);
+        final User from = users.get(i);
 
         //TODO get sender name
-        contact_lastname_firstname.setText(user.getNameUsername());
+        contact_lastname_firstname.setText(from.getNameUsername());
         contact_lastname_firstname.setVisibility(View.VISIBLE);
 
         return view;
