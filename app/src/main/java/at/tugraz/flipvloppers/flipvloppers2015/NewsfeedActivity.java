@@ -105,7 +105,7 @@ public class NewsfeedActivity extends Fragment{
             public void onClick(View v) {
 
                 int selectionCursor = message.getSelectionStart();
-                message.getText().insert(selectionCursor, ":sad:");
+                message.getText().insert(selectionCursor, "[img src=ic_pro_sad/]");
 
                 //ImageView tmp = imageSad;
                 //addImageBetweentext(tmp.getDrawable());

@@ -39,7 +39,7 @@
                 android:textSize="@dimen/feed_post_time" />
         </LinearLayout>
 
-        <TextView
+        <at.tugraz.flipvloppers.flipvloppers2015.adapter.TextViewWithImages
             android:id="@+id/feed_message"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

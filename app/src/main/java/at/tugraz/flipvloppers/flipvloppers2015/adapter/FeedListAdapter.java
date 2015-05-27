@@ -52,7 +52,8 @@ public class FeedListAdapter extends BaseAdapter{
 
         TextView name = (TextView) view.findViewById(R.id.feed_name);
         TextView timestamp = (TextView) view.findViewById(R.id.feed_time);
-        TextView feedMsg = (TextView) view.findViewById(R.id.feed_message);
+        TextViewWithImages feedMsg = (TextViewWithImages) view.findViewById(R.id.feed_message);
+
 
         NewsFeed message = messages.get(i);
 
