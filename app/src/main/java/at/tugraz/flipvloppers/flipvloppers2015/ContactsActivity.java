@@ -66,7 +66,7 @@ public class ContactsActivity extends Fragment {
                     // TODO Auto-generated method stub
                     User from = (User)listAdapter.getItem(position);
                     Intent nextScreen = new Intent(getActivity().getApplicationContext(), MessageActivity.class);
-                    nextScreen.putExtra("from", new Gson().toJson(from));
+                    nextScreen.putExtra("from", from);
                     startActivity(nextScreen);
             }
         });
