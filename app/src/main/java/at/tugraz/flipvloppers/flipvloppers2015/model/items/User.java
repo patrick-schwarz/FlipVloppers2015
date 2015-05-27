@@ -20,6 +20,10 @@ public class User implements Serializable {
         password_="";
     }
 
+    public User(String username)
+    {
+        this.username_ = username;
+    }
     public User(LoginResponseUser response, String username, String password)
     {
         id_ = response.id;

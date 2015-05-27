@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.LoginResponseUser;
+import at.tugraz.flipvloppers.flipvloppers2015.model.items.Message;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
@@ -140,6 +141,120 @@ public class WebserviceController {
         };
         User user = ControllerFactory.getCurrentUser();
         task.execute(user.getUsername_(), user.getPassword_(), message);
+    }
+
+    public void SendMessageToUser(String username_to,String text) {
+        AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
+
+            private static final String TAG = "MessageAdder";
+            public static final String SERVER_URL = "http://134.0.27.180/MessageAdder.php";
+
+            @Override
+            protected Void doInBackground(String... params) {
+                try {
+                    //Create an HTTP client
+                    HttpClient client = new DefaultHttpClient();
+                    HttpPost post = new HttpPost(SERVER_URL);
+                    Log.e(TAG, "sending data to database");
+
+                    // set POST parameters
+                    ArrayList<BasicNameValuePair> postParameters = new ArrayList<>();
+                    postParameters.add(new BasicNameValuePair("from", params[0]));
+                    postParameters.add(new BasicNameValuePair("to", params[1]));
+                    postParameters.add(new BasicNameValuePair("password", params[2]));
+                    postParameters.add(new BasicNameValuePair("message", params[3]));
+
+                    post.setEntity(new UrlEncodedFormEntity(postParameters));
+
+                    //Perform the request and check the status code
+                    HttpResponse response = client.execute(post);
+                    Log.e(TAG, "finished sending");
+
+
+                } catch (Exception ex) {
+                    Log.e(TAG, "Failed to send HTTP POST request due to: " + ex);
+                }
+                return null;
+            }
+        };
+
+        User from = ControllerFactory.getCurrentUser();
+        task.execute(from.getUsername_(), username_to, from.getPassword_(), text);
+    }
+    public List<Message> GetMessagesFrom(String username_from) {
+        AsyncTask<String, Void, List<Message>> task = new AsyncTask<String, Void, List<Message>>() {
+
+            private static final String TAG = "MessageReader";
+            public static final String SERVER_URL = "http://134.0.27.180/MessageReader.php";
+
+            @Override
+            protected List<Message> doInBackground(String... params) {
+
+                try {
+                    //Create an HTTP client
+                    HttpClient client = new DefaultHttpClient();
+                    HttpPost post = new HttpPost(SERVER_URL);
+
+                    // set POST parameters
+                    ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+                    postParameters.add(new BasicNameValuePair("to", params[0]));
+                    postParameters.add(new BasicNameValuePair("from", params[1]));
+                    postParameters.add(new BasicNameValuePair("password", params[2]));
+                    post.setEntity(new UrlEncodedFormEntity(postParameters));
+
+                    //Perform the request and check the status code
+                    HttpResponse response = client.execute(post);
+                    StatusLine statusLine = response.getStatusLine();
+                    if (statusLine.getStatusCode() == 200) {
+                        HttpEntity entity = response.getEntity();
+                        InputStream content = entity.getContent();
+
+                        try {
+                            //Read the server response and attempt to parse it as JSON
+                            Reader reader = new InputStreamReader(content);
+
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            gsonBuilder.setDateFormat("yyyy-mm-dd hh:mm:ss");
+                            Gson gson = gsonBuilder.create();
+
+                            List<Message> posts = new ArrayList<Message>();
+                            JsonParser parser = new JsonParser();
+                            JsonArray jArray = parser.parse(reader).getAsJsonArray();
+
+                            for (JsonElement obj : jArray) {
+                                Message cse = gson.fromJson(obj, Message.class);
+                                posts.add(cse);
+                            }
+
+                            content.close();
+                            Log.e(TAG, "packet recieved");
+                            return posts;
+                        } catch (Exception ex) {
+                            Log.e(TAG, "Failed to parse JSON due to: " + ex);
+                        }
+                    } else {
+                        Log.e(TAG, "Server responded with status code: " + statusLine.getStatusCode());
+                    }
+                } catch (Exception ex) {
+                    Log.e(TAG, "Failed to send HTTP POST request due to: " + ex);
+                }
+                return new ArrayList<Message>();
+            }
+        };
+        List<Message> result = null;
+        try {
+            User to = ControllerFactory.getCurrentUser();
+            //Log.e("NewsReader", user.getUsername_() + user.getPassword_());
+            result = task.execute(to.getUsername_(),username_from, to.getPassword_()).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public List<NewsFeed> GetNewsFeedList() {

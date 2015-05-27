@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
 
-        android:layout_marginLeft="@dimen/feed_post_margin"
+        android:layout_marginLeft="50dp"
         android:layout_marginRight="@dimen/feed_post_margin"
         android:layout_marginTop="@dimen/feed_post_margin"
         android:background="@drawable/feed_background_parent"
@@ -39,7 +39,7 @@
                 android:textSize="@dimen/feed_post_time" />
         </LinearLayout>
 
-        <at.tugraz.flipvloppers.flipvloppers2015.adapter.TextViewWithImages
+        <com.rockerhieu.emojicon.EmojiconTextView
             android:id="@+id/feed_message"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

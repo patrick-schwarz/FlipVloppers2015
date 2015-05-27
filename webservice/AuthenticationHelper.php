@@ -22,5 +22,20 @@ function authenticate($username, $password)
   }
    // require("disconnect.php");
     return -1; 
-} 
+}
+
+function get_user_id($username)
+{
+  //require("connect.php");
+  $query = "SELECT * FROM user WHERE username=\"$username\"";
+
+  $result = MYSQL_QUERY($query);
+  $number = MYSQL_NUMROWS($result);
+
+  if ($number != 0)
+  {
+    return  mysql_result($result, 0, "iduser");
+  }
+  return 0;
+}
 ?>

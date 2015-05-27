@@ -65,4 +65,13 @@ public class ControllerFactory {
             usrCtrl = new UserController();
         return usrCtrl;
     }
+
+    static MessageController messageCtrl = null;
+
+    static public MessageController GetMessageControllerInstance()
+    {
+        if(messageCtrl == null)
+            messageCtrl = new MessageController();
+        return messageCtrl;
+    }
 }
