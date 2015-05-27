@@ -1,18 +1,30 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
@@ -26,17 +38,23 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     private EditText password;
     private TextView error_msg;
     private Button btnlogin;
+    private CheckBox stayloggedin;
+    private boolean ischecked;
     private LoginController loginCtrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         loginCtrl = ControllerFactory.GetLoginControllerInstance();
+        retrieveAccount();
+        setContentView(R.layout.activity_login);
+
 
         username = (EditText) findViewById(R.id.editTextUsername);
         password = (EditText) findViewById(R.id.editTextPassword);
         btnlogin = (Button) findViewById(R.id.buttonLogin);
+        stayloggedin = (CheckBox) findViewById(R.id.checkBoxStayLoggedIn);
+
 
         error_msg = (TextView) findViewById(R.id.textViewError);
 
@@ -93,7 +111,16 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 break;
 
             case R.id.buttonLogin:
+
+                ischecked = stayloggedin.isChecked();
+
+                if (ischecked) {
+                    saveAccount();
+
+                }
+
                 login();
+
                 break;
 
             //Sending data to another Activity
@@ -114,6 +141,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             error_msg.setVisibility(View.VISIBLE);
             return;
         }
+
         Intent nextScreen = new Intent(getApplicationContext(), TabContainerActivity.class);
         nextScreen.putExtra("user", new Gson().toJson(ControllerFactory.getCurrentUser()));
 
@@ -126,5 +154,136 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
 
         startActivity(nextScreen);
+    }
+
+    public boolean saveAccount() {
+
+
+        String pass = password.getText().toString();
+
+        ArrayList<Integer> encrypted = new ArrayList<Integer>();
+        for (int i = 0; i < pass.length(); i++)
+        {
+            char text = pass.charAt(i);
+            int input = (int) text;
+            encrypted.add(encrypt(input));
+        }
+
+        // store preference
+        setIntegerArrayPref(this, "pass", encrypted);
+
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("username", username.getText().toString());
+        editor.putBoolean("checked", ischecked);
+        editor.commit();
+
+
+        if (pass != null)
+           return true;
+        else
+           return false;
+    }
+
+    public boolean retrieveAccount() {
+
+        // retrieve preferences
+        // getting Username
+        SharedPreferences read = PreferenceManager.getDefaultSharedPreferences(this);
+        String user = read.getString("username", null);
+        // getting Password
+        ArrayList<Integer> encrypted_new = new ArrayList<Integer>();
+        encrypted_new = getStringArrayPref(this, "pass");
+        // getting Checkbox Status
+        Boolean checked = read.getBoolean("checked", true); // getting Boolean
+
+        if ( user != null && encrypted_new.size() != 0 && checked)
+        {
+            ArrayList<Character> decrypted = new ArrayList<Character>();
+            for (int i = 0; i < encrypted_new.size(); i++)
+            {
+                char decrypted_char = (char) decrypt(encrypted_new.get(i));
+                decrypted.add(decrypted_char);
+            }
+            StringBuffer encrypted_out = new StringBuffer();
+            for (int i = 0; i < encrypted_new.size(); i++)
+            {
+                encrypted_out.append(decrypted.get(i));
+            }
+
+            String pass_fin = encrypted_out.toString();
+
+
+            Log.v("USER", "calling execute with: " + user + " " + pass_fin);
+            if (!loginCtrl.Login(user, pass_fin)) {
+                error_msg.setVisibility(View.VISIBLE);
+            }
+
+            Intent nextScreen = new Intent(getApplicationContext(), TabContainerActivity.class);
+            nextScreen.putExtra("user", new Gson().toJson(ControllerFactory.getCurrentUser()));
+
+
+            //Sending data to another Activity
+                /*
+                nextScreen.putExtra("name", inputName.getText().toString());
+                nextScreen.putExtra("email", inputEmail.getText().toString());
+
+                Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
+
+            startActivity(nextScreen);
+
+        }
+
+       return true;
+
+    }
+
+    public int encrypt(int input) {
+        int e = 11;
+        int n = 270703;
+        int ret = ((BigInteger.valueOf(input).pow(e).mod(BigInteger.valueOf(n)))).intValue();
+        return ret;
+    }
+
+    public int decrypt(int input) {
+        int d = 98051;
+        int n = 270703;
+        int ret = ((BigInteger.valueOf(input).pow(d).mod(BigInteger.valueOf(n)))).intValue();
+        return ret;
+    }
+
+    public static void setIntegerArrayPref(Context context, String key, ArrayList<Integer> values) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        JSONArray a = new JSONArray();
+        for (int i = 0; i < values.size(); i++) {
+            a.put(values.get(i));
+        }
+        if (!values.isEmpty()) {
+            editor.putString(key, a.toString());
+        } else {
+            editor.putString(key, null);
+        }
+        editor.commit();
+    }
+
+    public static ArrayList<Integer> getStringArrayPref(Context context, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = prefs.getString(key, null);
+        ArrayList<Integer> pass = new ArrayList<Integer>();
+        if (json != null) {
+            try {
+                JSONArray a = new JSONArray(json);
+                for (int i = 0; i < a.length(); i++) {
+                    String url = a.optString(i);
+                    int url_int = Integer.parseInt(url);
+                    pass.add(url_int);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return pass;
     }
 }
