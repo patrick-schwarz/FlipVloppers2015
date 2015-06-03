@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:text="username or password wrong"
         android:id="@+id/textViewError"
-        android:textColor="#F00"
+        android:textColor="@color/title_border"
         android:visibility="invisible"
         android:layout_below="@+id/checkBoxStayLoggedIn"
         android:layout_centerHorizontal="true" />

@@ -53,6 +53,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         username = (EditText) findViewById(R.id.editTextUsername);
         password = (EditText) findViewById(R.id.editTextPassword);
         btnlogin = (Button) findViewById(R.id.buttonLogin);
+
+
+
         stayloggedin = (CheckBox) findViewById(R.id.checkBoxStayLoggedIn);
 
 
@@ -135,6 +138,8 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         }
     }
 
+
+
     private void login() {
         Log.v("USER", "calling execute with: " + username.getText().toString() + " " + password.getText().toString());
         if (!loginCtrl.Login(username.getText().toString(), password.getText().toString())) {
@@ -170,10 +175,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         }
 
         // store preference
-        setIntegerArrayPref(this, "pass", encrypted);
+
+        setIntegerArrayPref("loginPrefs", "pass", encrypted);
 
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("username", username.getText().toString());
         editor.putBoolean("checked", ischecked);
@@ -190,11 +196,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
         // retrieve preferences
         // getting Username
-        SharedPreferences read = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences read = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         String user = read.getString("username", null);
         // getting Password
         ArrayList<Integer> encrypted_new = new ArrayList<Integer>();
-        encrypted_new = getStringArrayPref(this, "pass");
+        encrypted_new = getStringArrayPref("loginPrefs", "pass");
         // getting Checkbox Status
         Boolean checked = read.getBoolean("checked", true); // getting Boolean
 
@@ -253,8 +259,8 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         return ret;
     }
 
-    public static void setIntegerArrayPref(Context context, String key, ArrayList<Integer> values) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    public void setIntegerArrayPref(String context, String key, ArrayList<Integer> values) {
+        SharedPreferences prefs = getSharedPreferences(context, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         JSONArray a = new JSONArray();
         for (int i = 0; i < values.size(); i++) {
@@ -268,8 +274,8 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         editor.commit();
     }
 
-    public static ArrayList<Integer> getStringArrayPref(Context context, String key) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    public ArrayList<Integer> getStringArrayPref(String context, String key) {
+        SharedPreferences prefs = getSharedPreferences(context, MODE_PRIVATE);
         String json = prefs.getString(key, null);
         ArrayList<Integer> pass = new ArrayList<Integer>();
         if (json != null) {
