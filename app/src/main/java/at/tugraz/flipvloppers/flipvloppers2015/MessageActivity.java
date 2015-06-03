@@ -231,16 +231,15 @@ public class MessageActivity extends ActionBarActivity {
 
             int lenght = listAdapter.getData().size();
             for(int index = lenght;index < updatedMessageList.size();index++) {
-                listAdapter.addItem(updatedMessageList.get(index - 1));
+                listAdapter.addItem(updatedMessageList.get(index));
             }
 
-            if(listView.getSelectedItemPosition() == (lenght - 1))
-                listView.setSelection(listAdapter.getCount() - 1);
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     listAdapter.notifyDataSetChanged();
+                    listView.setSelection(listAdapter.getCount() - 1);
                 }
             });
         }
