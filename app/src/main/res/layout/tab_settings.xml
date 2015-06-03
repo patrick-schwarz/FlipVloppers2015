@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/title"
-        android:text="Settings"
+        android:text="Logout"
         android:textColor="@color/white"
         android:layout_width="fill_parent"
         android:layout_height="0dp"

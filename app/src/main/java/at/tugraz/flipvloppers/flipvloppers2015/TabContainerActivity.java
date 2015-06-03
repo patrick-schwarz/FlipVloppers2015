@@ -1,9 +1,6 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -12,8 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
-
-import java.util.ResourceBundle;
 
 
 public class TabContainerActivity extends FragmentActivity {
@@ -64,7 +59,7 @@ public class TabContainerActivity extends FragmentActivity {
         );
         View settingsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_settings,null);
         mTabHost.addTab(
-                mTabHost.newTabSpec("settings").setIndicator(settingsView),
+                mTabHost.newTabSpec("logout").setIndicator(settingsView),
                 SettingsAcitivity.class, null
         );
 
