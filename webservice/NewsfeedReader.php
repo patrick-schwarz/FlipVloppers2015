@@ -14,6 +14,7 @@ if(!empty($user) && !empty($password))
   {
     $query = "SELECT * FROM message m INNER JOIN user u ON (m.id_user_sender = u.iduser) WHERE message_type_id='NEWSF' ORDER BY create_time DESC";
   
+  	MYSQL_QUERY("SET NAMES 'utf8'");
     $result = MYSQL_QUERY($query);
 	$number = MYSQL_NUMROWS($result);
 
