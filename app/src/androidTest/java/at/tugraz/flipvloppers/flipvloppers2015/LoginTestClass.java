@@ -6,7 +6,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.Button;
 
+import com.robotium.solo.Condition;
 import com.robotium.solo.Solo;
 
 import java.util.Random;
@@ -47,15 +50,33 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
     public void testNewsfeedOpens()
     {
         login();
+        final LinearLayout messageSection = (LinearLayout) mySolo.getView(R.id.llMessageSection);
+        assertEquals(View.GONE, messageSection.getVisibility());
 
-        mySolo.clickOnButton("+");
-        LinearLayout messageSection = (LinearLayout) mySolo.getView(R.id.llMessageSection);
+        ImageButton btnOpen = (ImageButton) mySolo.getView(R.id.buttonOpen);
+        mySolo.clickOnView(btnOpen);
+        //mySolo.clickOnButton("+");
+
+        mySolo.waitForCondition(new Condition() {
+            @Override
+            public boolean isSatisfied() {
+                return View.VISIBLE == messageSection.getVisibility();
+            }
+        }, 5000);
+
 
         assertEquals(View.VISIBLE, messageSection.getVisibility());
 
-        mySolo.clickOnButton("-");
+        mySolo.clickOnView(btnOpen);
+        //mySolo.clickOnButton("+");
+        final LinearLayout messageSection2 = (LinearLayout) mySolo.getView(R.id.llMessageSection);
+        mySolo.waitForCondition(new Condition() {
+            @Override
+            public boolean isSatisfied() {
+                return View.GONE == messageSection2.getVisibility();
+            }
+        }, 5000);
 
-        LinearLayout messageSection2 = (LinearLayout) mySolo.getView(R.id.llMessageSection);
         assertEquals(View.GONE, messageSection2.getVisibility());
     }
 
@@ -63,13 +84,26 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
     {
         String rnd = UUID.randomUUID().toString();
         login();
-        mySolo.clickOnButton("+");
+        final LinearLayout messageSection = (LinearLayout) mySolo.getView(R.id.llMessageSection);
+        //assertEquals(View.GONE, messageSection.getVisibility());
+
+        ImageButton btnOpen = (ImageButton) mySolo.getView(R.id.buttonOpen);
+        mySolo.clickOnView(btnOpen);
+
+        mySolo.waitForCondition(new Condition() {
+            @Override
+            public boolean isSatisfied() {
+                return View.VISIBLE == messageSection.getVisibility();
+            }
+        }, 5000);
+
+        assertEquals(View.VISIBLE, messageSection.getVisibility());
+
         EditText message = (EditText) mySolo.getView(R.id.editTextMessage);
         mySolo.enterText(message, rnd);
-        mySolo.clickOnButton("Send");
 
-        LinearLayout messageSection = (LinearLayout) mySolo.getView(R.id.llMessageSection);
-        assertEquals(View.GONE, messageSection.getVisibility());
+        Button btnSend = (Button) mySolo.getView(R.id.buttonSend);
+        mySolo.clickOnView(btnSend);
 
         assertTrue("Error sending msg", mySolo.waitForText(rnd));
     }
