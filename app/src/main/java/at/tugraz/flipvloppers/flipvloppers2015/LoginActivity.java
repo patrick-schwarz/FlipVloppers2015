@@ -39,7 +39,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     private TextView error_msg;
     private Button btnlogin;
     private CheckBox stayloggedin;
-    private boolean ischecked;
     private LoginController loginCtrl = null;
 
     @Override
@@ -114,51 +113,30 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 break;
 
             case R.id.buttonLogin:
-
-                ischecked = stayloggedin.isChecked();
-
-                if (ischecked) {
-                    saveAccount();
-
-                }
-
                 login();
 
                 break;
-
-            //Sending data to another Activity
-                /*
-                nextScreen.putExtra("name", inputName.getText().toString());
-                nextScreen.putExtra("email", inputEmail.getText().toString());
-
-                Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
-
-            //startActivity(nextScreen);
-            //  break;
         }
     }
 
 
 
-    private void login() {
+    private boolean login() {
         Log.v("USER", "calling execute with: " + username.getText().toString() + " " + password.getText().toString());
         if (!loginCtrl.Login(username.getText().toString(), password.getText().toString())) {
             error_msg.setVisibility(View.VISIBLE);
-            return;
+            return false;
         }
+        else {
+            if (stayloggedin.isChecked()) {
+                saveAccount();
+            }
 
-        Intent nextScreen = new Intent(getApplicationContext(), TabContainerActivity.class);
-        nextScreen.putExtra("user", new Gson().toJson(ControllerFactory.getCurrentUser()));
-
-
-        //Sending data to another Activity
-                /*
-                nextScreen.putExtra("name", inputName.getText().toString());
-                nextScreen.putExtra("email", inputEmail.getText().toString());
-
-                Log.e("n", inputName.getText()+"."+ inputEmail.getText());*/
-
-        startActivity(nextScreen);
+            Intent nextScreen = new Intent(getApplicationContext(), TabContainerActivity.class);
+            nextScreen.putExtra("user", new Gson().toJson(ControllerFactory.getCurrentUser()));
+            startActivity(nextScreen);
+            return true;
+        }
     }
 
     public boolean saveAccount() {
@@ -182,7 +160,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("username", username.getText().toString());
-        editor.putBoolean("checked", ischecked);
+        editor.putBoolean("checked", stayloggedin.isChecked());
         editor.commit();
 
 

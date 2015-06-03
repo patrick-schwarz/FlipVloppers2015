@@ -25,18 +25,6 @@ public class MessageController {
         ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(m.getTo_id(),m.getMessage());
     }
 
-   /* public void SendMessageToGroup(String text,int groupID)
-    {
-        User from = ControllerFactory.getCurrentUser();
-        Message message = new Message();
-        message.setId_user_sender(from.getId_());
-        message.setId_(messages.size() + 1);
-        message.setText(text);
-        message.setIdgroup_(groupID);
-        //TODO Send Message
-
-    }*/
-
     public List<Message> GetMessagesFromUser(String username_from)
     {
         return ControllerFactory.GetWebserviceControllerInstance().GetMessagesFrom(username_from);

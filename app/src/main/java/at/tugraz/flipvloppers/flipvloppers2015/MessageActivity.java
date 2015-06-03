@@ -47,6 +47,30 @@ public class MessageActivity extends ActionBarActivity {
 
     private MessageController messageCtrl = null;
     private EmojiController emojiCtrl = null;
+
+    private boolean updateUI = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        updateUI = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                synchronized (this) {
+                    refreshNews();
+                }
+            };
+        };
+
+        thread.start();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -247,8 +271,9 @@ public class MessageActivity extends ActionBarActivity {
 
     public void refreshNews()
     {
+        updateUI = true;
         try {
-            while(true) {
+            while(updateUI) {
                 Thread.sleep(5000);
                 refreshView();
             }

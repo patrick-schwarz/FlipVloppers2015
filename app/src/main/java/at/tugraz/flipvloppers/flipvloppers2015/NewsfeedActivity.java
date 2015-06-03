@@ -47,16 +47,39 @@ public class NewsfeedActivity extends Fragment{
     private NewsFeedController nfCtrl = null;
     private View v;
     private Activity activity_;
+    private boolean updateUI = false;
 
     private ImageView imageSad, imageSmile, imageAngry, imageAnonymous,
             imageCoffee, imageTongue, imageThumb, imageDevil, imageGentleman,
             imageBlink, imageBigeyes, imageParty;
 
     @Override
+    public void onPause() {
+        super.onPause();
+        updateUI = false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                synchronized (this) {
+                    refreshNews();
+                }
+            }
+        };
+        thread.start();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_newsfeed, container, false);
         activity_ = getActivity();
+
         user = ControllerFactory.getCurrentUser();
         nfCtrl = ControllerFactory.GetNewsFeedControllerInstance();
         listView = (ListView) v.findViewById(R.id.listPosts);
@@ -73,10 +96,14 @@ public class NewsfeedActivity extends Fragment{
 
         listAdapter = new FeedListAdapter(this, messageList);
         listView.setAdapter(listAdapter);
+
         Thread thread = new Thread(){
-            public void run(){
-                refreshNews();
-            } 
+            @Override
+            public void run() {
+                synchronized (this) {
+                    refreshNews();
+                }
+            }
         };
         thread.start();
 
@@ -199,96 +226,39 @@ public class NewsfeedActivity extends Fragment{
         return v;
     }
 
-    /*private void addImageBetweentext(Drawable drawable) {
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 2, drawable.getIntrinsicHeight() / 2);
 
-        int selectionCursor = message.getSelectionStart();
-        message.getText().insert(selectionCursor, ":sad:");
-        selectionCursor = message.getSelectionStart();
-
-        SpannableStringBuilder builder = new SpannableStringBuilder(message.getText());
-        builder.setSpan(new ImageSpan(drawable), selectionCursor - ":sad:".length(), selectionCursor, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        message.setText(builder);
-        message.setSelection(selectionCursor);
-
-        
-    }*/
-
-
-    /*
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //Generate test data
-
-    }*/
-        //NewsFeed new_msg = new NewsFeed(0, "1", "username", "Mr", new Date(1000), "erster test");
 
     private void refreshView()
     {
-        Thread thread = new Thread(){
+        activity_.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    synchronized (this) {
-                        wait(5000);
-
-                        activity_.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (listIsAtTop()) {
-                                    if ((messageList.size() != updatedMessageList.size()) && updatedMessageList.size() > 0) {
-                                        messageList.clear();
-                                        messageList.addAll(updatedMessageList);
-                                        listAdapter.notifyDataSetChanged();
-                                    }
-
-
-                                    return;
-                                }
-                            }
-                        });
-
+                if (listIsAtTop() && messageList != null && updatedMessageList != null) {
+                    if ((messageList.size() != updatedMessageList.size()) && updatedMessageList.size() > 0) {
+                        messageList.clear();
+                        messageList.addAll(updatedMessageList);
+                        listAdapter.notifyDataSetChanged();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+
+                    return;
                 }
-            };
-        };
-        thread.start();
+            }
+        });
     }
 
     public void refreshNews()
     {
-        /*runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                    try {
-                        while(true) {
-                            Thread.sleep(5000);
-                            if (listIsAtTop()) {
-                                List<NewsFeed> new_list= getNewsfeed();
-                                updatedMessageList.clear();
-                                updatedMessageList.addAll(new_list);
-                                refreshView();
-                                return;
-                            }
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-        });*/
-
+        updateUI = true;
         try {
-            while(true) {
+            while(updateUI) {
                 Thread.sleep(5000);
 
-                updatedMessageList = getNewsfeed();
+                if(this.isVisible()) {
+                    updatedMessageList = getNewsfeed();
 
-                refreshView();
+                    refreshView();
+                }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
