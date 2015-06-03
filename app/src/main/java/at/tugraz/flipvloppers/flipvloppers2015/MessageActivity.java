@@ -1,5 +1,6 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -32,7 +33,7 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 
-public class MessageActivity extends ActionBarActivity {
+public class MessageActivity extends Activity {
     private ListView listView;
     private MessageAdapter listAdapter = null;
     private User user;
@@ -280,13 +281,6 @@ public class MessageActivity extends ActionBarActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_message, menu);
-        return true;
     }
 
     @Override
