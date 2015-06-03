@@ -13,6 +13,7 @@ public class LoginController {
     {
         User user = ControllerFactory.GetWebserviceControllerInstance().CheckLogin(username, password);
         ControllerFactory.setCurrentUser(user);
+        ControllerFactory.GetUserControllerInstance().resetUser();
         return (user != null);
     }
 

@@ -75,9 +75,12 @@ public class MessageActivity extends ActionBarActivity {
         refreshView();
 
         Thread thread = new Thread(){
-            public void run(){
-                refreshNews();
-            }
+                @Override
+                public void run() {
+                    synchronized (this) {
+                        refreshNews();
+                    }
+            };
         };
         thread.start();
 
@@ -225,13 +228,21 @@ public class MessageActivity extends ActionBarActivity {
             listView.setSelection(listAdapter.getCount() - 1);
         }
         else if (listAdapter.getData().size() < updatedMessageList.size()) {
-            listAdapter.notifyDataSetChanged();
 
-            for(int index = listAdapter.getData().size();index < updatedMessageList.size();index++) {
+            int lenght = listAdapter.getData().size();
+            for(int index = lenght;index < updatedMessageList.size();index++) {
                 listAdapter.addItem(updatedMessageList.get(index - 1));
             }
 
-            listAdapter.notifyDataSetChanged();
+            if(listView.getSelectedItemPosition() == (lenght - 1))
+                listView.setSelection(listAdapter.getCount() - 1);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    listAdapter.notifyDataSetChanged();
+                }
+            });
         }
     }
 

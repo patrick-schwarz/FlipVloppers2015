@@ -58,6 +58,7 @@ public class ControllerFactory {
     }
 
     static UserController usrCtrl = null;
+    static UserController newUsrCtrl = null;
 
     static public UserController GetUserControllerInstance()
     {

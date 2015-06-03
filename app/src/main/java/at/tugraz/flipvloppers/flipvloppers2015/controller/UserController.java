@@ -17,6 +17,10 @@ public class UserController {
         users = ControllerFactory.GetWebserviceControllerInstance().getUsers();
     }
 
+    public void resetUser()
+    {
+        users = ControllerFactory.GetWebserviceControllerInstance().getUsers();
+    }
     public User getUser(int ID)
     {
         List<User> response = getUsers();
