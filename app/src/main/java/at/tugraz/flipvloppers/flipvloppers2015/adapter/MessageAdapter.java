@@ -19,7 +19,7 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.Message;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
-public class MessageAdapter extends BaseAdapter{
+public class MessageAdapter extends BaseAdapter {
 
     private Activity activity;
     private LayoutInflater inflater;
@@ -41,6 +41,10 @@ public class MessageAdapter extends BaseAdapter{
         return messages.get(i);
     }
 
+    public void addItem(Message message){ messages.add(message);}
+
+    public List<Message> getData(){return messages;}
+
     @Override
     public long getItemId(int i) {
         return i;
@@ -51,13 +55,21 @@ public class MessageAdapter extends BaseAdapter{
 
         Message message = messages.get(i);
 
+        User from = null;
+
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (view == null) {
-            if(message.from_id == ControllerFactory.getCurrentUser().getId_())
+
+        if (message.from_id == ControllerFactory.getCurrentUser().getId_()) {
+            if (view == null)
                 view = inflater.inflate(R.layout.message_right_post, null);
-            else
+
+            from = ControllerFactory.getCurrentUser();
+        } else {
+            if (view == null)
                 view = inflater.inflate(R.layout.message_left_post, null);
+
+            from = ControllerFactory.GetUserControllerInstance().getUser(message.from_id);
         }
 
         TextView name = (TextView) view.findViewById(R.id.feed_name);
@@ -66,7 +78,6 @@ public class MessageAdapter extends BaseAdapter{
 
 
         //TODO get sender name
-        User from = ControllerFactory.GetUserControllerInstance().getUser(message.from_id);
         name.setText(from.getLastName() + " " + from.getFirstName());
         feedMsg.setText(message.getMessage());
         feedMsg.setVisibility(View.VISIBLE);

@@ -143,7 +143,7 @@ public class WebserviceController {
         task.execute(user.getUsername_(), user.getPassword_(), message);
     }
 
-    public void SendMessageToUser(String username_to,String text) {
+    public void SendMessageToUser(Integer to_id,String text) {
         AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
 
             private static final String TAG = "MessageAdder";
@@ -179,7 +179,8 @@ public class WebserviceController {
         };
 
         User from = ControllerFactory.getCurrentUser();
-        task.execute(from.getUsername_(), username_to, from.getPassword_(), text);
+        User to = ControllerFactory.GetUserControllerInstance().getUser(to_id);
+        task.execute(from.getUsername_(), to.getUsername_(), from.getPassword_(), text);
     }
     public List<Message> GetMessagesFrom(String username_from) {
         AsyncTask<String, Void, List<Message>> task = new AsyncTask<String, Void, List<Message>>() {

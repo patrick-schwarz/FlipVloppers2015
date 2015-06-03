@@ -21,7 +21,7 @@ public class UserController {
     {
         List<User> response = getUsers();
         for (User user : response) {
-            if (user.getId_() == ID);
+            if (user.getId_() == ID)
                 return user;
         }
         return null;

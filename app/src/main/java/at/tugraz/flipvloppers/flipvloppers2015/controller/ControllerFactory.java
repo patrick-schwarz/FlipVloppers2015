@@ -74,4 +74,13 @@ public class ControllerFactory {
             messageCtrl = new MessageController();
         return messageCtrl;
     }
+
+    static EmojiController emojiCtrl = null;
+
+    static public EmojiController GetEmojiControllerInstance()
+    {
+        if(emojiCtrl == null)
+            emojiCtrl = new EmojiController();
+        return emojiCtrl;
+    }
 }

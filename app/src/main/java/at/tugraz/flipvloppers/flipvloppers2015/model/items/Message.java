@@ -19,6 +19,7 @@ public class Message {
         this.from_id = from_id;
         this.to_id = to_id;
         this.message = message;
+        this.date = new Date();
     }
 
 
