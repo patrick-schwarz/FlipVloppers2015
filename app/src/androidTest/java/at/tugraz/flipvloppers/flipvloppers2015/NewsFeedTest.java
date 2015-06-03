@@ -3,12 +3,17 @@ package at.tugraz.flipvloppers.flipvloppers2015;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.robotium.solo.Solo;
 
+import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
+import at.tugraz.flipvloppers.flipvloppers2015.controller.LoginController;
+import at.tugraz.flipvloppers.flipvloppers2015.controller.UserController;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
@@ -18,12 +23,27 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 public class NewsFeedTest extends ActivityInstrumentationTestCase2{
     private Solo mySolo;
-    private User user;
+    //private User user;
     public NewsFeedTest() {
         super(NewsfeedActivity.class);
     }
 
+    User user;
+    LoginController loginCtrl;
+    UserController userCtrl;
+    boolean logged_in = false;
     public void setUp() throws Exception {
+
+        super.setUp();
+        loginCtrl = ControllerFactory.GetLoginControllerInstance();
+        boolean logged_in = loginCtrl.Login("kurt", "123");
+        userCtrl = ControllerFactory.GetUserControllerInstance();
+
+        mySolo = new Solo(getInstrumentation(), getActivity());
+        assertTrue(logged_in);
+    }
+
+    /*public void setUp() throws Exception {
         Intent nextScreen = new Intent(getActivity().getApplicationContext(), NewsFeed.class);
         nextScreen.putExtra("user", new Gson().toJson(user));
         setActivityIntent(nextScreen);
@@ -41,7 +61,7 @@ public class NewsFeedTest extends ActivityInstrumentationTestCase2{
         //TODO fix
         //getActivity().user = user;
         //Utils.Login(mySolo);
-    }
+    }*/
 
     public void tearDown() throws Exception {
         mySolo.finishOpenedActivities();
@@ -82,5 +102,19 @@ public class NewsFeedTest extends ActivityInstrumentationTestCase2{
         bottomText = mySolo.getText(messagelast.getMessage().toString(), true);
 
         assertNull(bottomText);
+    }
+
+    public void testEmojiClick()
+    {
+        /*mySolo.clickOnButton("+");
+
+        View party = mySolo.getView(R.id.imageParty);
+        mySolo.clickOnView(party);
+
+        EditText message = (EditText) mySolo.getView(R.id.editTextMessage);
+        //mySolo.enterText(message, rnd);
+        //mySolo.clickOnButton("Send");
+
+        assertEquals(":party:", message.getText().toString());*/
     }
 }

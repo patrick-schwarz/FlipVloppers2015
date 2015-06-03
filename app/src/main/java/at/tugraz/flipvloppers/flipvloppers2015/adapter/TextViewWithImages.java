@@ -50,9 +50,12 @@ public class TextViewWithImages extends TextView {
             int id = context.getResources().getIdentifier(resname, "drawable", context.getPackageName());
             if (set && id > 0) {
                 hasChanges = true;
-                spannable.setSpan(  new ImageSpan(context, id),
+                ImageSpan imgSpan = new ImageSpan(context, id);
+                //imgSpan.getDrawable().setBounds(0, 0, 1
+                spannable.setSpan( imgSpan,
                         matcher.start(),
                         matcher.end(),
+
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 );
 

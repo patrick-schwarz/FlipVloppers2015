@@ -103,20 +103,103 @@ public class NewsfeedActivity extends Fragment{
         imageSad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 int selectionCursor = message.getSelectionStart();
-                message.getText().insert(selectionCursor, "[img src=ic_pro_sad/]");
-
-                //ImageView tmp = imageSad;
-                //addImageBetweentext(tmp.getDrawable());
+                message.getText().insert(selectionCursor, ":sad:");
             }
         });
 
+        imageSmile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":smile:");
+            }
+        });
+
+        imageAngry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":angry:");
+            }
+        });
+
+        imageAnonymous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":anonymous:");
+            }
+        });
+
+        imageCoffee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":coffee:");
+            }
+        });
+
+        imageTongue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":tongue:");
+            }
+        });
+
+        imageThumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":thumb:");
+            }
+        });
+
+        imageDevil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":devil:");
+            }
+        });
+
+        imageGentleman.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":gentleman:");
+            }
+        });
+
+        imageBlink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":blink:");
+            }
+        });
+
+        imageBigeyes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":bigeyes:");
+            }
+        });
+
+        imageParty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":party:");
+            }
+        });
 
         return v;
     }
 
-    private void addImageBetweentext(Drawable drawable) {
+    /*private void addImageBetweentext(Drawable drawable) {
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 2, drawable.getIntrinsicHeight() / 2);
 
         int selectionCursor = message.getSelectionStart();
@@ -129,7 +212,7 @@ public class NewsfeedActivity extends Fragment{
         message.setSelection(selectionCursor);
 
         
-    }
+    }*/
 
 
     /*
@@ -203,9 +286,7 @@ public class NewsfeedActivity extends Fragment{
             while(true) {
                 Thread.sleep(5000);
 
-                System.out.println("UPDATE THIS VIEW? 1");
                 updatedMessageList = getNewsfeed();
-                System.out.println("UPDATE THIS VIEW? 2");
 
                 refreshView();
             }
@@ -224,8 +305,12 @@ public class NewsfeedActivity extends Fragment{
             @Override
             public void onClick(View arg0) {
                 NewsFeed message1 = new NewsFeed(1, user.getUsername_(), user.getLastName(), user.getFirstName(), new Date(),
-                        message.getText().toString());
+                        parseEmoji(message.getText().toString()));
                 //messageList.add(message1);
+
+
+
+
                 newFeedPost(message1);
 
                 listAdapter.notifyDataSetChanged();
@@ -234,6 +319,23 @@ public class NewsfeedActivity extends Fragment{
                 startActivity(intent);
             }
         });
+    }
+
+    private String parseEmoji(String old)
+    {
+        old = old.replaceAll(":smile:", "[img src=ic_pro_smile/]");
+        old = old.replaceAll(":sad:", "[img src=ic_pro_sad/]");
+        old = old.replaceAll(":angry:", "[img src=ic_pro_angry/]");
+        old = old.replaceAll(":anonymous:", "[img src=ic_pro_anonymous/]");
+        old = old.replaceAll(":bigeyes:", "[img src=ic_pro_bigeyes/]");
+        old = old.replaceAll(":blink:", "[img src=ic_pro_blink/]");
+        old = old.replaceAll(":coffee:", "[img src=ic_pro_coffee/]");
+        old = old.replaceAll(":devil:", "[img src=ic_pro_devil/]");
+        old = old.replaceAll(":gentleman:", "[img src=ic_pro_gentleman/]");
+        old = old.replaceAll(":party:", "[img src=ic_pro_party/]");
+        old = old.replaceAll(":thumb:", "[img src=ic_pro_thumbs_up/]");
+        old = old.replaceAll(":tongue:", "[img src=ic_pro_tongue/]");
+        return old;
     }
 
     boolean btnOpen_open = false;
