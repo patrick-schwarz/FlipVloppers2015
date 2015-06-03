@@ -25,11 +25,11 @@ if(!empty($to) && !empty($from) && !empty($password))
 	  for ($i = 0; $i < $number; $i++)
       {
         $id = mysql_result($result, $i, "idmessage");
-        $from = mysql_result($result, $i, "id_user_sender");
-		$to = mysql_result($result, $i, "id_user_receiver");
+        $from_m = mysql_result($result, $i, "id_user_sender");
+		$to_m = mysql_result($result, $i, "id_user_receiver");
 		$date = mysql_result($result, $i, "create_time");
 		$text = mysql_result($result, $i, "text");
-        $data = array( 'id' => $id, 'from' => $from, 'to' => $to, 'date' => $date, 'message' => $text );
+        $data = array( 'id' => $id, 'from_id' => $from_m, 'to_id' => $to_m, 'date' => $date, 'message' => $text );
         array_push($output_array, $data);
       }
 	  echo json_encode( $output_array );

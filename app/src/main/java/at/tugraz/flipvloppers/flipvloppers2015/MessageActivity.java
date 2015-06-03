@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -23,6 +24,7 @@ import java.util.List;
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.FeedListAdapter;
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.MessageAdapter;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.ControllerFactory;
+import at.tugraz.flipvloppers.flipvloppers2015.controller.EmojiController;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.MessageController;
 import at.tugraz.flipvloppers.flipvloppers2015.controller.NewsFeedController;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.Message;
@@ -32,18 +34,19 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
 public class MessageActivity extends ActionBarActivity {
     private ListView listView;
-    private MessageAdapter listAdapter;
-    private List<Message> messageList;
-    private List<Message> updatedMessageList = new LinkedList<Message>();
+    private MessageAdapter listAdapter = null;
     private User user;
     private User from;
 
-    private LinearLayout messageSection;
     private EditText message;
     private Button btnSend;
 
+    private ImageView imageSad, imageSmile, imageAngry, imageAnonymous,
+            imageCoffee, imageTongue, imageThumb, imageDevil, imageGentleman,
+            imageBlink, imageBigeyes, imageParty;
 
     private MessageController messageCtrl = null;
+    private EmojiController emojiCtrl = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,24 +57,23 @@ public class MessageActivity extends ActionBarActivity {
             if(extras == null) {
                 from= null;
             } else {
-                from= (User) new Gson().fromJson(extras.getString("from"),User.class);
+                from= (User) extras.getSerializable("from");
             }
         } else {
             from= (User) savedInstanceState.getSerializable("from");
         }
 
         user = ControllerFactory.getCurrentUser();
+        emojiCtrl = ControllerFactory.GetEmojiControllerInstance();
         messageCtrl = ControllerFactory.GetMessageControllerInstance();
         listView = (ListView) findViewById(R.id.listPosts);
         btnSend = (Button) findViewById(R.id.buttonSend);
         message = (EditText) findViewById(R.id.editTextMessage);
-        messageSection = (LinearLayout) findViewById(R.id.llMessageSection);
 
-        messageList = getMessages();
         btnClick();
 
-        listAdapter = new MessageAdapter(this, messageList);
-        listView.setAdapter(listAdapter);
+        refreshView();
+
         Thread thread = new Thread(){
             public void run(){
                 refreshNews();
@@ -79,71 +81,170 @@ public class MessageActivity extends ActionBarActivity {
         };
         thread.start();
 
+        // Init Emojis
+        imageSad = (ImageView) findViewById(R.id.imageSad);
+        imageSmile = (ImageView) findViewById(R.id.imageSmile);
+        imageAngry = (ImageView) findViewById(R.id.imageAngry);
+        imageAnonymous = (ImageView) findViewById(R.id.imageAnonymous);
+        imageCoffee = (ImageView) findViewById(R.id.imageCoffee);
+        imageTongue = (ImageView) findViewById(R.id.imageTongue);
+        imageThumb = (ImageView) findViewById(R.id.imageThumbs);
+        imageDevil = (ImageView) findViewById(R.id.imageDevil);
+        imageGentleman = (ImageView) findViewById(R.id.imageGentleman);
+        imageBlink = (ImageView) findViewById(R.id.imageBlink);
+        imageBigeyes = (ImageView) findViewById(R.id.imageBigeyes);
+        imageParty = (ImageView) findViewById(R.id.imageParty);
 
-        refreshView();
+        imageSad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":sad:");
+            }
+        });
 
-        listAdapter.notifyDataSetChanged();
+        imageSmile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":smile:");
+            }
+        });
+
+        imageAngry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":angry:");
+            }
+        });
+
+        imageAnonymous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":anonymous:");
+            }
+        });
+
+        imageCoffee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":coffee:");
+            }
+        });
+
+        imageTongue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":tongue:");
+            }
+        });
+
+        imageThumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":thumb:");
+            }
+        });
+
+        imageDevil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":devil:");
+            }
+        });
+
+        imageGentleman.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":gentleman:");
+            }
+        });
+
+        imageBlink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":blink:");
+            }
+        });
+
+        imageBigeyes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":bigeyes:");
+            }
+        });
+
+        imageParty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectionCursor = message.getSelectionStart();
+                message.getText().insert(selectionCursor, ":party:");
+            }
+        });
     }
 
     public void btnClick() {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                NewsFeed message1 = new NewsFeed(1, user.getUsername_(), user.getLastName(), user.getFirstName(), new Date(),
-                        message.getText().toString());
-                //messageList.add(message1);
-                newMessagePost(message1);
+                Message m = new Message(0, user.getId_(), from.getId_(),
+                        emojiCtrl.parseEmoji(message.getText().toString()));
+                message.setText("");
 
+                messageCtrl.SendMessageToUser(m.getMessage(), from.getId_());
+
+                listAdapter.addItem(m);
                 listAdapter.notifyDataSetChanged();
+
+                listView.setSelection(listAdapter.getCount() - 1);
+
+                refreshView();
             }
         });
     }
 
+
+
+    private void refreshView()
+    {
+        List<Message> updatedMessageList = messageCtrl.GetMessagesFromUser(from.getUsername_());
+
+        if(listAdapter == null)
+        {
+            listAdapter = new MessageAdapter(this,updatedMessageList);
+            listView.setAdapter(listAdapter);
+            listView.setSelection(listAdapter.getCount() - 1);
+        }
+        else if (listAdapter.getData().size() < updatedMessageList.size()) {
+            listAdapter.notifyDataSetChanged();
+
+            for(int index = listAdapter.getData().size();index < updatedMessageList.size();index++) {
+                listAdapter.addItem(updatedMessageList.get(index - 1));
+            }
+
+            listAdapter.notifyDataSetChanged();
+        }
+    }
+
     public void refreshNews()
     {
-        /*runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                    try {
-                        while(true) {
-                            Thread.sleep(5000);
-                            if (listIsAtTop()) {
-                                List<NewsFeed> new_list= getNewsfeed();
-                                updatedMessageList.clear();
-                                updatedMessageList.addAll(new_list);
-                                refreshView();
-                                return;
-                            }
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-        });*/
-
         try {
             while(true) {
                 Thread.sleep(5000);
-
-                System.out.println("UPDATE THIS VIEW? 1");
-                updatedMessageList = getMessages();
-                System.out.println("UPDATE THIS VIEW? 2");
-
                 refreshView();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public List<Message> getMessages() {
-        List<Message> msgs = messageCtrl.GetMessagesFromUser(from.getUsername_());
-
-        for (Message feed : msgs) {
-            Log.e("MessageActivity", "msg: " + feed.getMessage());
-        }
-        return msgs;
     }
 
     @Override
@@ -166,59 +267,6 @@ public class MessageActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void newMessagePost(NewsFeed new_feed) {
-        Log.v("newFeedPost", "sending data to database newFeedPost");
-        messageCtrl.SendMessageToUser( new_feed.getMessage(),from.getUsername_());
-        messageList = messageCtrl.GetMessagesFromUser(from.getUsername_());
-    }
-
-    private void refreshView()
-    {
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                try {
-                    synchronized (this) {
-                        wait(5000);
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                System.out.println("HELLO!!!!!!! UPDATE 1 !!!!! THIS");
-                                if (listIsAtTop()) {
-                                    //List<NewsFeed> new_list= getNewsfeed();
-                                    System.out.println("CHECK FOR SIZE 889911");
-                                    System.out.println("Updated Message List Size is " + updatedMessageList.size());
-                                    if ((messageList.size() != updatedMessageList.size()) && updatedMessageList.size() > 0) {
-                                        messageList.clear();
-                                        messageList.addAll(updatedMessageList);
-                                        System.out.println("HELLO!!!!!!! CLEAR THIS");
-                                        listAdapter.notifyDataSetChanged();
-                                    }
-
-
-                                    return;
-                                }
-                                System.out.println("HELLO!!!!!!! !!!!!!!!!!!!! UPDATE 2 THIS");
-                            }
-                        });
-
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
-                //startActivity(mainActivity);
-            };
-        };
-        thread.start();
-    }
-
-    private boolean listIsAtTop() {
-        if(listView.getChildCount() == 0) return true;
-        return listView.getChildAt(0).getTop() == 0;
     }
 
 }

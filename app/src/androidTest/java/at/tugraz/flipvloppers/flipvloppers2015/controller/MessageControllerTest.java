@@ -30,30 +30,31 @@ public class MessageControllerTest extends TestCase {
 
     public void testSendMessageToUser() throws InterruptedException {
 
-        messageCtrl.SendMessageToUser("Das ist ein 1. Testtext von kurt!",  "sexybunny");
+        User to = userCtrl.getUser("sexybunny");
+        messageCtrl.SendMessageToUser("Das ist ein 1. Testtext von kurt!",  to.getId_());
 
         Thread.sleep(1000);
 
-        messageCtrl.SendMessageToUser("Das ist ein 2. Testtext von kurt!", "sexybunny");
+        messageCtrl.SendMessageToUser("Das ist ein 2. Testtext von kurt!", to.getId_());
 
         Thread.sleep(1000);
 
-        messageCtrl.SendMessageToUser("Das ist ein 3. Testtext von kurt!", "sexybunny");
+        messageCtrl.SendMessageToUser("Das ist ein 3. Testtext von kurt!", to.getId_());
 
         Thread.sleep(1000);
 
         assertTrue(loginCtrl.Login("sexybunny", "Asdf1234"));
 
 
-        messageCtrl.SendMessageToUser("Das ist ein 1. Testtext von sexybunny!", "kurt");
+        messageCtrl.SendMessageToUser("Das ist ein 1. Testtext von sexybunny!", to.getId_());
 
         Thread.sleep(1000);
 
-        messageCtrl.SendMessageToUser("Das ist ein 2. Testtext von sexybunny!","kurt");
+        messageCtrl.SendMessageToUser("Das ist ein 2. Testtext von sexybunny!",to.getId_());
 
         Thread.sleep(1000);
 
-        messageCtrl.SendMessageToUser("Das ist ein 3. Testtext von sexybunny!","kurt");
+        messageCtrl.SendMessageToUser("Das ist ein 3. Testtext von sexybunny!",to.getId_());
 
         Thread.sleep(1000);
 

@@ -16,9 +16,13 @@ public class MessageController {
     {
         messages = new ArrayList<Message>();
     }
-    public void SendMessageToUser(String text,String to)
+    public void SendMessageToUser(String text,Integer to_id)
     {
-        ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(to,text);
+        ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(to_id,text);
+    }
+    public void SendMessageToUser(Message m)
+    {
+        ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(m.getTo_id(),m.getMessage());
     }
 
    /* public void SendMessageToGroup(String text,int groupID)
