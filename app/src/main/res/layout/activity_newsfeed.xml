@@ -184,7 +184,7 @@ android:layout_height="fill_parent">
     <ListView
         android:id="@+id/listPosts"
         android:layout_width="fill_parent"
-        android:layout_height="467dp"
+        android:layout_height="fill_parent"
         android:divider="@null" />
 </LinearLayout>
 
