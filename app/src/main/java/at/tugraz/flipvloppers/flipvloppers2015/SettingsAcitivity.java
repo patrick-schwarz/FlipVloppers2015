@@ -40,7 +40,7 @@ public class SettingsAcitivity extends Fragment implements View.OnClickListener 
         return v;
     }
 
-    public void onClick (View v) {
+    public void onClick(View v) {
 
         switch (v.getId()) {
 
@@ -61,5 +61,5 @@ public class SettingsAcitivity extends Fragment implements View.OnClickListener 
         }
     }
 
-   }
+}
 

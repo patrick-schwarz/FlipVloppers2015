@@ -1,25 +1,14 @@
 package at.tugraz.flipvloppers.flipvloppers2015;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import at.tugraz.flipvloppers.flipvloppers2015.adapter.FeedListAdapter;
@@ -60,13 +49,15 @@ public class MessageActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 synchronized (this) {
                     refreshNews();
                 }
-            };
+            }
+
+            ;
         };
 
         thread.start();
@@ -79,13 +70,13 @@ public class MessageActivity extends Activity {
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                from= null;
+            if (extras == null) {
+                from = null;
             } else {
-                from= (User) extras.getSerializable("from");
+                from = (User) extras.getSerializable("from");
             }
         } else {
-            from= (User) savedInstanceState.getSerializable("from");
+            from = (User) savedInstanceState.getSerializable("from");
         }
 
         user = ControllerFactory.getCurrentUser();
@@ -99,13 +90,15 @@ public class MessageActivity extends Activity {
 
         refreshView();
 
-        Thread thread = new Thread(){
-                @Override
-                public void run() {
-                    synchronized (this) {
-                        refreshNews();
-                    }
-            };
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                synchronized (this) {
+                    refreshNews();
+                }
+            }
+
+            ;
         };
         thread.start();
 
@@ -241,21 +234,17 @@ public class MessageActivity extends Activity {
     }
 
 
-
-    private void refreshView()
-    {
+    private void refreshView() {
         List<Message> updatedMessageList = messageCtrl.GetMessagesFromUser(from.getUsername_());
 
-        if(listAdapter == null)
-        {
-            listAdapter = new MessageAdapter(this,updatedMessageList);
+        if (listAdapter == null) {
+            listAdapter = new MessageAdapter(this, updatedMessageList);
             listView.setAdapter(listAdapter);
             listView.setSelection(listAdapter.getCount() - 1);
-        }
-        else if (listAdapter.getData().size() < updatedMessageList.size()) {
+        } else if (listAdapter.getData().size() < updatedMessageList.size()) {
 
             int lenght = listAdapter.getData().size();
-            for(int index = lenght;index < updatedMessageList.size();index++) {
+            for (int index = lenght; index < updatedMessageList.size(); index++) {
                 listAdapter.addItem(updatedMessageList.get(index));
             }
 
@@ -270,11 +259,10 @@ public class MessageActivity extends Activity {
         }
     }
 
-    public void refreshNews()
-    {
+    public void refreshNews() {
         updateUI = true;
         try {
-            while(updateUI) {
+            while (updateUI) {
                 Thread.sleep(5000);
                 refreshView();
             }

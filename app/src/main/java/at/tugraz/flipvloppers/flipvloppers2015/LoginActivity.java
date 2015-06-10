@@ -54,7 +54,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         btnlogin = (Button) findViewById(R.id.buttonLogin);
 
 
-
         stayloggedin = (CheckBox) findViewById(R.id.checkBoxStayLoggedIn);
 
 
@@ -92,20 +91,21 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
     private boolean del_emtpytext_password = true;
     private boolean del_emtpytext_username = true;
+
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
             case R.id.editTextUsername:
                 String username_s = username.getText().toString();
-                if(del_emtpytext_username) {
+                if (del_emtpytext_username) {
                     username.setText("");
                     del_emtpytext_username = false;
                 }
                 error_msg.setVisibility(View.INVISIBLE);
                 break;
             case R.id.editTextPassword:
-                if(del_emtpytext_password) {
+                if (del_emtpytext_password) {
                     password.setText("");
                     del_emtpytext_password = false;
                 }
@@ -120,14 +120,12 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     }
 
 
-
     private boolean login() {
         Log.v("USER", "calling execute with: " + username.getText().toString() + " " + password.getText().toString());
         if (!loginCtrl.Login(username.getText().toString(), password.getText().toString())) {
             error_msg.setVisibility(View.VISIBLE);
             return false;
-        }
-        else {
+        } else {
             if (stayloggedin.isChecked()) {
                 saveAccount();
             }
@@ -145,8 +143,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         String pass = password.getText().toString();
 
         ArrayList<Integer> encrypted = new ArrayList<Integer>();
-        for (int i = 0; i < pass.length(); i++)
-        {
+        for (int i = 0; i < pass.length(); i++) {
             char text = pass.charAt(i);
             int input = (int) text;
             encrypted.add(encrypt(input));
@@ -165,9 +162,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
 
         if (pass != null)
-           return true;
+            return true;
         else
-           return false;
+            return false;
     }
 
     public boolean retrieveAccount() {
@@ -182,17 +179,14 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         // getting Checkbox Status
         Boolean checked = read.getBoolean("checked", true); // getting Boolean
 
-        if ( user != null && encrypted_new.size() != 0 && checked)
-        {
+        if (user != null && encrypted_new.size() != 0 && checked) {
             ArrayList<Character> decrypted = new ArrayList<Character>();
-            for (int i = 0; i < encrypted_new.size(); i++)
-            {
+            for (int i = 0; i < encrypted_new.size(); i++) {
                 char decrypted_char = (char) decrypt(encrypted_new.get(i));
                 decrypted.add(decrypted_char);
             }
             StringBuffer encrypted_out = new StringBuffer();
-            for (int i = 0; i < encrypted_new.size(); i++)
-            {
+            for (int i = 0; i < encrypted_new.size(); i++) {
                 encrypted_out.append(decrypted.get(i));
             }
 
@@ -219,7 +213,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
         }
 
-       return true;
+        return true;
 
     }
 

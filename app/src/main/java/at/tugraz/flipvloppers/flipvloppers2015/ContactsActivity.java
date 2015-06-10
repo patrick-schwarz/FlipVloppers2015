@@ -33,8 +33,9 @@ public class ContactsActivity extends Fragment {
 
     private UserController uCtrl = null;
     private ContactsActivity contactsActivity;
-    private  View v;
+    private View v;
     private Activity activity_;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,9 +53,9 @@ public class ContactsActivity extends Fragment {
 
         btnSearch();
 
-        List<User> users =  uCtrl.getUsers();
+        List<User> users = uCtrl.getUsers();
         Log.e("Contacts", "Got " + users.size() + " Users");
-        listAdapter = new ContactsListAdapter( this, uCtrl.getUsers());
+        listAdapter = new ContactsListAdapter(this, uCtrl.getUsers());
         listContacts.setAdapter(listAdapter);
 
 
@@ -63,11 +64,11 @@ public class ContactsActivity extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    // TODO Auto-generated method stub
-                    User from = (User)listAdapter.getItem(position);
-                    Intent nextScreen = new Intent(getActivity().getApplicationContext(), MessageActivity.class);
-                    nextScreen.putExtra("from", from);
-                    startActivity(nextScreen);
+                // TODO Auto-generated method stub
+                User from = (User) listAdapter.getItem(position);
+                Intent nextScreen = new Intent(getActivity().getApplicationContext(), MessageActivity.class);
+                nextScreen.putExtra("from", from);
+                startActivity(nextScreen);
             }
         });
 
@@ -99,10 +100,8 @@ public class ContactsActivity extends Fragment {
     }
 
 
-
-
     public void btnSearch() {
-        searchContacts.setOnCloseListener(new SearchView.OnCloseListener(){
+        searchContacts.setOnCloseListener(new SearchView.OnCloseListener() {
 
             @Override
             public boolean onClose() {
@@ -123,13 +122,10 @@ public class ContactsActivity extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(newText.replace(" ","").equals(""))
-                {
+                if (newText.replace(" ", "").equals("")) {
                     listAdapter = new ContactsListAdapter(contactsActivity, uCtrl.getUsers());
                     listContacts.setAdapter(listAdapter);
-                }
-                else
-                {
+                } else {
                     listAdapter = new ContactsListAdapter(contactsActivity, uCtrl.getUsers(newText));
                     listContacts.setAdapter(listAdapter);
                 }

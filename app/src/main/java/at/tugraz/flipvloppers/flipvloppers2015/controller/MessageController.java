@@ -12,21 +12,20 @@ import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 public class MessageController {
 
     List<Message> messages;
-    public MessageController()
-    {
+
+    public MessageController() {
         messages = new ArrayList<Message>();
     }
-    public void SendMessageToUser(String text,Integer to_id)
-    {
-        ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(to_id,text);
-    }
-    public void SendMessageToUser(Message m)
-    {
-        ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(m.getTo_id(),m.getMessage());
+
+    public void SendMessageToUser(String text, Integer to_id) {
+        ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(to_id, text);
     }
 
-    public List<Message> GetMessagesFromUser(String username_from)
-    {
+    public void SendMessageToUser(Message m) {
+        ControllerFactory.GetWebserviceControllerInstance().SendMessageToUser(m.getTo_id(), m.getMessage());
+    }
+
+    public List<Message> GetMessagesFromUser(String username_from) {
         return ControllerFactory.GetWebserviceControllerInstance().GetMessagesFrom(username_from);
     }
 }

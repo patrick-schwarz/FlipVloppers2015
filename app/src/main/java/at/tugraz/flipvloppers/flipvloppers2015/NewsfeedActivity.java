@@ -31,7 +31,7 @@ import at.tugraz.flipvloppers.flipvloppers2015.controller.NewsFeedController;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.NewsFeed;
 import at.tugraz.flipvloppers.flipvloppers2015.model.items.User;
 
-public class NewsfeedActivity extends Fragment{
+public class NewsfeedActivity extends Fragment {
 
     private ListView listView;
     private FeedListAdapter listAdapter;
@@ -63,7 +63,7 @@ public class NewsfeedActivity extends Fragment{
     public void onResume() {
         super.onResume();
 
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 synchronized (this) {
@@ -87,7 +87,7 @@ public class NewsfeedActivity extends Fragment{
         message = (EditText) v.findViewById(R.id.editTextMessage);
         btnOpen = (ImageButton) v.findViewById(R.id.buttonOpen);
         messageSection = (LinearLayout) v.findViewById(R.id.llMessageSection);
-        if (messageSection!=null)
+        if (messageSection != null)
             messageSection.setVisibility(View.GONE);
 
         messageList = getNewsfeed();
@@ -97,7 +97,7 @@ public class NewsfeedActivity extends Fragment{
         listAdapter = new FeedListAdapter(this, messageList);
         listView.setAdapter(listAdapter);
 
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 synchronized (this) {
@@ -227,9 +227,7 @@ public class NewsfeedActivity extends Fragment{
     }
 
 
-
-    private void refreshView()
-    {
+    private void refreshView() {
         activity_.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -247,14 +245,13 @@ public class NewsfeedActivity extends Fragment{
         });
     }
 
-    public void refreshNews()
-    {
+    public void refreshNews() {
         updateUI = true;
         try {
-            while(updateUI) {
+            while (updateUI) {
                 Thread.sleep(5000);
 
-                if(this.isVisible()) {
+                if (this.isVisible()) {
                     updatedMessageList = getNewsfeed();
 
                     refreshView();
@@ -266,7 +263,7 @@ public class NewsfeedActivity extends Fragment{
     }
 
     private boolean listIsAtTop() {
-        if(listView.getChildCount() == 0) return true;
+        if (listView.getChildCount() == 0) return true;
         return listView.getChildAt(0).getTop() == 0;
     }
 
@@ -279,8 +276,6 @@ public class NewsfeedActivity extends Fragment{
                 //messageList.add(message1);
 
 
-
-
                 newFeedPost(message1);
 
                 listAdapter.notifyDataSetChanged();
@@ -291,8 +286,7 @@ public class NewsfeedActivity extends Fragment{
         });
     }
 
-    private String parseEmoji(String old)
-    {
+    private String parseEmoji(String old) {
         old = old.replaceAll(":smile:", "[img src=ic_pro_smile/]");
         old = old.replaceAll(":sad:", "[img src=ic_pro_sad/]");
         old = old.replaceAll(":angry:", "[img src=ic_pro_angry/]");
@@ -309,13 +303,12 @@ public class NewsfeedActivity extends Fragment{
     }
 
     boolean btnOpen_open = false;
-    public void btnOpen()
-    {
+
+    public void btnOpen() {
         btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (!btnOpen_open)
-                {
+                if (!btnOpen_open) {
                     messageSection.setVisibility(View.VISIBLE);
                     btnOpen.setImageResource(R.mipmap.ic_action_overflow);
                     btnOpen_open = true;
@@ -345,7 +338,7 @@ public class NewsfeedActivity extends Fragment{
 
     public void newFeedPost(NewsFeed new_feed) {
         Log.v("newFeedPost", "sending data to database newFeedPost");
-        nfCtrl.SendNewsfeedPost( new_feed.getMessage());
+        nfCtrl.SendNewsfeedPost(new_feed.getMessage());
         messageList = nfCtrl.GetNewsFeedList();
     }
 

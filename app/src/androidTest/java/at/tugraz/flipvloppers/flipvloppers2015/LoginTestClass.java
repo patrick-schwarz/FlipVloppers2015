@@ -39,16 +39,14 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
         assertTrue("Error.", mySolo.waitForText(mySolo.getString(R.string.hello_world)));
     }*/
 
-    private void login()
-    {
+    private void login() {
         mySolo.clickOnButton("Login");
         //mySolo.waitForActivity(NewsfeedActivity.class, 1000);
         assertTrue("Newsfeed", mySolo.waitForText("Newsfeed"));
 
     }
 
-    public void testNewsfeedOpens()
-    {
+    public void testNewsfeedOpens() {
         login();
         final LinearLayout messageSection = (LinearLayout) mySolo.getView(R.id.llMessageSection);
         assertEquals(View.GONE, messageSection.getVisibility());
@@ -80,8 +78,7 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
         assertEquals(View.GONE, messageSection2.getVisibility());
     }
 
-    public void testAddMessage()
-    {
+    public void testAddMessage() {
         String rnd = UUID.randomUUID().toString();
         login();
         final LinearLayout messageSection = (LinearLayout) mySolo.getView(R.id.llMessageSection);
@@ -108,16 +105,15 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
         assertTrue("Error sending msg", mySolo.waitForText(rnd));
     }
 
-    public void testScroll()
-    {
+    public void testScroll() {
         login();
-        ListView listView =(ListView) mySolo.getView(R.id.listPosts);
+        ListView listView = (ListView) mySolo.getView(R.id.listPosts);
 
         assertNotNull(listView);
 
         mySolo.scrollListToTop(listView);
 
-        NewsFeed messagefirst = (NewsFeed)listView.getItemAtPosition(0);
+        NewsFeed messagefirst = (NewsFeed) listView.getItemAtPosition(0);
         TextView topText = mySolo.getText(messagefirst.getMessage(), true);
 
         assertNotNull(topText);
@@ -125,7 +121,7 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
         mySolo.scrollListToBottom(listView);
 
 
-        NewsFeed messagelast = (NewsFeed)listView.getItemAtPosition(listView.getCount() - 1);
+        NewsFeed messagelast = (NewsFeed) listView.getItemAtPosition(listView.getCount() - 1);
         TextView bottomText = mySolo.getText(messagelast.getMessage(), true);
 
         assertNotNull(bottomText);
@@ -138,9 +134,7 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
     }
 
 
-
-    public void testFillInLoginData()
-    {
+    public void testFillInLoginData() {
         EditText username = (EditText) mySolo.getView(R.id.editTextUsername);
         mySolo.clearEditText(username);
         mySolo.enterText(username, "kurtWinter");
@@ -152,8 +146,7 @@ public class LoginTestClass extends ActivityInstrumentationTestCase2<LoginActivi
         assertEquals("test123", password.getText().toString());
     }
 
-    public void testClickCheckbox()
-    {
+    public void testClickCheckbox() {
         assertTrue("Error. Testbox should not be checked", !mySolo.isCheckBoxChecked(0));
         mySolo.clickOnCheckBox(0);
         assertTrue("Error. Testbox should be checked", mySolo.isCheckBoxChecked(0));

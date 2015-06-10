@@ -12,17 +12,15 @@ public class UserController {
 
     private List<User> users = null;
 
-    public UserController()
-    {
+    public UserController() {
         users = ControllerFactory.GetWebserviceControllerInstance().getUsers();
     }
 
-    public void resetUser()
-    {
+    public void resetUser() {
         users = ControllerFactory.GetWebserviceControllerInstance().getUsers();
     }
-    public User getUser(int ID)
-    {
+
+    public User getUser(int ID) {
         List<User> response = getUsers();
         for (User user : response) {
             if (user.getId_() == ID)
@@ -30,18 +28,17 @@ public class UserController {
         }
         return null;
     }
-    public User getUser(String username)
-    {
+
+    public User getUser(String username) {
         List<User> response = getUsers();
         for (User user : response) {
-            if (user.getUsername_().toLowerCase() == username.toLowerCase());
-                return user;
+            if (user.getUsername_().toLowerCase() == username.toLowerCase()) ;
+            return user;
         }
         return null;
     }
 
-    public List<User> getUsers()
-    {
+    public List<User> getUsers() {
         return users;
     }
 
@@ -49,7 +46,7 @@ public class UserController {
         List<User> response = getUsers();
         List<User> result = new ArrayList<User>();
 
-        if(filter.replace(" ","") == "")
+        if (filter.replace(" ", "") == "")
             return response;
 
         for (User user : response) {

@@ -12,8 +12,7 @@ public class NewsFeedController {
         ControllerFactory.GetWebserviceControllerInstance().SendNewsfeedPost(message);
     }
 
-    public List<NewsFeed> GetNewsFeedList()
-    {
+    public List<NewsFeed> GetNewsFeedList() {
         return ControllerFactory.GetWebserviceControllerInstance().GetNewsFeedList();
     }
 

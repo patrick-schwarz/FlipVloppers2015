@@ -4,8 +4,7 @@ package at.tugraz.flipvloppers.flipvloppers2015.controller;
  * Created by Admin on 03.06.2015.
  */
 public class EmojiController {
-    public String parseEmoji(String old)
-    {
+    public String parseEmoji(String old) {
         old = old.replaceAll(":smile:", "[img src=ic_pro_smile/]");
         old = old.replaceAll(":sad:", "[img src=ic_pro_sad/]");
         old = old.replaceAll(":angry:", "[img src=ic_pro_angry/]");

@@ -14,6 +14,7 @@ import android.widget.TabHost;
 public class TabContainerActivity extends FragmentActivity {
 
     private FragmentTabHost mTabHost;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +25,8 @@ public class TabContainerActivity extends FragmentActivity {
         mTabHost.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
 
             @Override
-            public void onViewDetachedFromWindow(View v) {}
+            public void onViewDetachedFromWindow(View v) {
+            }
 
             @Override
             public void onViewAttachedToWindow(View v) {
@@ -36,35 +38,33 @@ public class TabContainerActivity extends FragmentActivity {
 
             @Override
             public void onTabChanged(String s) {
-                for(int i=0;i<mTabHost.getTabWidget().getChildCount();i++)
-                {
+                for (int i = 0; i < mTabHost.getTabWidget().getChildCount(); i++) {
                     mTabHost.getTabWidget().getChildAt(i).setBackgroundColor(0xFF0099);
                 }
 
-                    mTabHost.getCurrentTabView().setBackgroundResource(R.color.feed_post_border);
+                mTabHost.getCurrentTabView().setBackgroundResource(R.color.feed_post_border);
 
 
             }
 
         });
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
-        View newsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_newsfeed,null);
+        View newsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_newsfeed, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("newsfeed").setIndicator(newsView), NewsfeedActivity.class, null
         );
-        View contactsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_contacts,null);
+        View contactsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_contacts, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("contacts").setIndicator(contactsView),
                 ContactsActivity.class, null
         );
-        View settingsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_settings,null);
+        View settingsView = LayoutInflater.from(TabContainerActivity.this).inflate(R.layout.tab_settings, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("logout").setIndicator(settingsView),
                 SettingsAcitivity.class, null
         );
 
     }
-
 
 
     @Override
